@@ -16,16 +16,16 @@ CREATE TABLE users (
 
 CREATE TABLE comments (
 	commentID INT AUTO_INCREMENT NOT NULL, 
-    userID INT NOT NULL,
-	body VARCHAR(255) NOT NULL,
+  userID INT NOT NULL,
+	comment VARCHAR(255) NOT NULL,
+	podcastInfo VARCHAR(255) NOT NULL,
 	PRIMARY KEY(commentID)
 );
 
-CREATE TABLE podcast (
+CREATE TABLE user_podcast (
 	podcastID INT AUTO_INCREMENT NOT NULL, 
-	podcastURL VARCHAR(255) NOT NULL,
-    podcastTitle VARCHAR(50) NOT NULL,
 	userID INT NOT NULL,
+	podcastFeedURL VARCHAR(255) NOT NULL,
 	PRIMARY KEY(podcastID)
 );
 
