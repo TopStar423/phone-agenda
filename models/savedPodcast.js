@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var savedPodcast = sequelize.define("savedPodcast", {
+    var SavedPodcast = sequelize.define("saved_podcast", {
         podcastID: {
           type: DataTypes.INTEGER,
           allowNull: false
@@ -12,16 +12,9 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isUrl: true;
+                isUrl: true
             }
         }
     });
-    savedPodcast.associate = function(db) {
-        savedPodcast.belongsTo(db.User, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-    return savedPodcast;
+    return SavedPodcast;
 };

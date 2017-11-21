@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var User = sequelize.define("User", {
+    var User = sequelize.define("users", {
         userID: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.Comment, {
             onDelete: "cascade"
         })
-        Uer.hasMany(models.savedPodcast, {
+        User.hasMany(models.savedPodcast, {
             onDelete: "cascade"
         });
     };
