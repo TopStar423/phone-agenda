@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var User = sequelize.define("users", {
+    var User = sequelize.define("User", {
         userID: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -42,15 +42,15 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
 
-    User.associate = function(models) {
-        // Associating Author with Posts
-        // When an Author is deleted, also delete any associated Posts
-        User.hasMany(models.Comment, {
-            onDelete: "cascade"
-        })
-        User.hasMany(models.savedPodcast, {
-            onDelete: "cascade"
-        });
-    };
+    // User.associate = function(models) {
+    //     // Associating Author with Posts
+    //     // When an Author is deleted, also delete any associated Posts
+    //     User.hasMany(models.Comment, {
+    //         onDelete: "cascade"
+    //     })
+    //     User.hasMany(models.savedPodcast, {
+    //         onDelete: "cascade"
+    //     });
+    // };
     return User;
 };
