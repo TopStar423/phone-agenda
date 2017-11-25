@@ -1,12 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
-    var Comment = sequelize.define("comments", {
+    var Comments = sequelize.define("comments", {
         commentID: {
           type: DataTypes.INTEGER,
           allowNull: false
-        },
-        userID: {
-            type: DataTypes.INTEGER,
-            allowNull: false
         },
         comment: {
             type: DataTypes.TEXT,
@@ -20,14 +16,13 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
     });
-    Comment.associate = function(db) {
-        // We're saying that a Post should belong to an Author
-        // A Post can't be created without an Author due to the foreign key constraint
-        Comment.belongsTo(db.User, {
+
+    Comments.associate = function(models) {
+        Comments.belongsTo(models.users, {
             foreignKey: {
                 allowNull: false
             }
         });
     };
-    return Comment;
+    return Comments;
 };

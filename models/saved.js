@@ -4,10 +4,6 @@ module.exports = function(sequelize, DataTypes) {
           type: DataTypes.INTEGER,
           allowNull: false
         },
-        userID: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         podcastFeedURL: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -18,9 +14,8 @@ module.exports = function(sequelize, DataTypes) {
     });
 
   Saved.associate = function(models) {
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
-    Saved.belongsTo(models.Users, {
+
+    Saved.belongsTo(models.users, {
       foreignKey: {
         allowNull: false
       }
