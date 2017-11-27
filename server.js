@@ -17,14 +17,16 @@ if (process.env.NODE_ENV === "production") {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Add routes, both API and view
-app.use(routes);
+
 
 //use passport for auth
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// Add routes, both API and view
+app.use(routes);
 
 // Send every request to the React app
 // Define any API routes before this runs

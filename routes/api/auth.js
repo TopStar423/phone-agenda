@@ -1,8 +1,9 @@
 // Requiring our models and passport as we've configured it
-var db = require("../../models");
-var passport = require("../../config/passport");
 var express = require("express");
 var router = express.Router();
+var db = require("../../models");
+var passport = require("../../config/passport");
+
 
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
@@ -18,11 +19,11 @@ var router = express.Router();
   // otherwise send back an error
   router.post("/signup", function(req, res) {
     console.log(req.body);
-    db.User.create({
-      email: req.body.email,
-      password: req.body.password
+    db.users.create(req.body, function (result) {
+      console.log(result);
+      // res.redirect("/");
     }).then(function() {
-      res.redirect(307, "/api/login");
+      res.redirect(307, "/api/auth/login");
     }).catch(function(err) {
       console.log(err);
       res.json(err);
@@ -30,10 +31,12 @@ var router = express.Router();
     });
   });
   // Route for logging user out
-  router.get("/logout", function(req, res) {
-    req.logout();
-    res.redirect("/");
-  });
+  router.get('/logout', function(req, res){
+  console.log('logging out');
+  req.logout();
+  res.redirect('/api/users');
+});
+
   // Route for getting some data about our user to be used client side
   router.get("/user_data", function(req, res) {
     if (!req.user) {
@@ -45,7 +48,8 @@ var router = express.Router();
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        data: req.user
       });
     }
   });
