@@ -2,7 +2,7 @@ import React from 'react';
 import "./PodcastThumbnail.css";
 
 const PodcastThumbnail = (props) =>
-  <div> 
+  <div className="podcast-thumbnail"> 
   	<img src={props.image} alt="" />
   </div>;
 

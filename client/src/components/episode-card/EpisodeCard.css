@@ -1,3 +1,7 @@
 .episodeButton {
   background-color: pink;
 }
+
+.episode-card-box {
+	border: 1px dashed black;
+}

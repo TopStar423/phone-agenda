@@ -1,7 +1,6 @@
-var express = require("express");
-var router = express.Router();
-var db = require("../../models/");
-const podcastsController = require("../../controllers/podcastsController");
+const express = require("express");
+const router = express.Router();
+const db = require("../../models/");
 
 
 //get all users
@@ -51,8 +50,5 @@ router.post("/savedPodcast/save/", function (req, res) {
     // res.redirect("/");
   });
 });
-
-//route for main search function
-router.route("/search/:id").get(podcastsController.findAll);
 
 module.exports = router;

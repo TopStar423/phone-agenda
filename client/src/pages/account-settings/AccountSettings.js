@@ -24,80 +24,86 @@ class AccountSettings extends Component {
   render() {
 
     return (
-      <div>
+      <div className="accountSettings">
         <form>
-          <h2>Account Settings:</h2>
+          <h2>Account Settings</h2>
           <div>
             <div>
               <label>Username: </label>
-              <Input
-                onChange={this.handleInputChange}
-                value={this.state.username}
-                name="username"
-                type="text"
-                className="form-control"
-                id="username"
-                required=""
-              />
+              <div className="form-field">
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.username}
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  required=""
+                />
 
-              <Button
-                value="Submit"
-                label="Edit"
-                onClick={this.handleFormSubmit}
-              />
-              <Button
-                value="Submit"
-                label="Save"
-                onClick={this.handleFormSubmit}
-              />
+                <Button
+                  value="Submit"
+                  label="Edit"
+                  onClick={this.handleFormSubmit}
+                />
+                <Button
+                  value="Submit"
+                  label="Save"
+                  onClick={this.handleFormSubmit}
+                />
+              </div>
             </div>
 
             <div>
               <label>Email: </label>
-              <Input
-                onChange={this.handleInputChange}
-                value={this.state.email}
-                name="email"
-                type="text"
-                className="form-control"
-                id="email"
-                required=""
-              />
+              <div className="form-field">
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.email}
+                  name="email"
+                  type="text"
+                  className="form-control"
+                  id="email"
+                  required=""
+                />
 
-              <Button
-                value="Submit"
-                label="Edit"
-                onClick={this.handleFormSubmit}
-              />
-              <Button
-                value="Submit"
-                label="Save"
-                onClick={this.handleFormSubmit}
-              />
+                <Button
+                  value="Submit"
+                  label="Edit"
+                  onClick={this.handleFormSubmit}
+                />
+                <Button
+                  value="Submit"
+                  label="Save"
+                  onClick={this.handleFormSubmit}
+                />
+              </div>
             </div>
 
             <div>
               <label>Password: </label>
-              <Input
-                onChange={this.handleInputChange}
-                value={this.state.password}
-                name="password"
-                type="text"
-                className="form-control"
-                id="password"
-                required=""
-              />
+              <div className="form-field">
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.password}
+                  name="password"
+                  type="text"
+                  className="form-control"
+                  id="password"
+                  required=""
+                />
 
-              <Button
-                value="Submit"
-                label="Edit"
-                onClick={this.handleFormSubmit}
-              />
-              <Button
-                value="Submit"
-                label="Save"
-                onClick={this.handleFormSubmit}
-              />
+                <Button
+                  value="Submit"
+                  label="Edit"
+                  onClick={this.handleFormSubmit}
+                />
+                <Button
+                  value="Submit"
+                  label="Save"
+                  onClick={this.handleFormSubmit}
+                />
+              </div>
             </div>
           </div>
         </form>

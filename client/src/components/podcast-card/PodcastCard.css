@@ -1,0 +1,28 @@
+.podcast-box {
+	display: flex;
+	flex-direction: column;
+  justify-content: center;
+ 	width: 80%;
+}
+
+.podcast-box .title {
+	display: flex;
+	align-items: center;
+}
+
+.podcast-box .link-subscribe {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.podcast-box .link-subscribe .podcastButton {
+	font-size: 1.4em;
+	width: 110px;
+}
+
+@media (max-width: 768px) {
+	.podcast-box .title {
+		flex-direction: column;
+	}
+}

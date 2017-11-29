@@ -4,12 +4,19 @@ import Input from "../../components/input/Input";
 import "./SignUp.css";
 
 class SignUp extends Component {
-  state = {
-    username: "",
-    email: "",
-    password1: "",
-    password2: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: "",
+      email: "",
+      password: ""
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
 
   handleInputChange = event => {
     const {name, value} = event.target;
@@ -18,17 +25,22 @@ class SignUp extends Component {
     });
   };
 
+  onSubmit = event => {
+    event.preventDefault();
+    console.log("hello");
+  };
+
   handleFormSubmit = event => {
     event.preventDefault();
   };
 
   render() {
     return (
-      <div>
+      <div className="signUp">
         <form>
-          <h2>Sign Up:</h2>
+          <h2>Sign Up</h2>
           <div> 
-            <div>
+            <div className="form-field">
               <label>Username: </label>
               <Input   
                 onChange={this.handleInputChange} 
@@ -41,7 +53,7 @@ class SignUp extends Component {
               />
             </div>
 
-            <div>
+            <div className="form-field">
               <label>Email: </label>
               <Input 
                 onChange={this.handleInputChange} 
@@ -54,40 +66,27 @@ class SignUp extends Component {
                />
             </div>
 
-            <div>
+            <div className="form-field">
               <label>Password: </label>
               <Input 
                 onChange={this.handleInputChange} 
-                value={this.state.password1}
-                name="password1"
+                value={this.state.password}
+                name="password"
                 type="text"
                 className="form-control"
-                id="password1"
+                id="password"
                 required=""
               />
             </div>
 
-            <div>
-              <label>Confirm password: </label>
-              <Input 
-                onChange={this.handleInputChange} 
-                value={this.state.password2}
-                name="password2"
-                type="text"
-                className="form-control"
-                id="password2"
-                required=""
-              />
-            </div>
           </div>
-        </form>
-        <div style={{clear: "both"}}>
           <Button
             value="Submit"
+            type="submit"
             label="Save"
-            onClick={this.handleFormSubmit}
+            onSubmit={this.handleFormSubmit}
           />
-        </div>
+        </form>
       </div>
     );
   };

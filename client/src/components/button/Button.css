@@ -1,4 +1,4 @@
-Button {
+button {
 	border-radius: 10px;
-	margin: 5px;
+	border: 1px #000 solid;
 }

@@ -1,33 +1,33 @@
-.signUp {
+.logIn {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.signUp form {
-  margin-top: 80px;
+.logIn form {
+  margin-top: 100px;
 }
 
-.signUp h2 {
+.logIn h2 {
   font-size: 2.3em;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.signUp label {
+.logIn label {
   font-size: 1.7em;
 }
 
-.signUp .form-control {
+.logIn .form-control {
   font-size: 2em;
   padding: 5px;
 }
 
-.signUp .form-field {
+.logIn .form-field {
   margin-bottom: 20px;
 }
 
-.signUp button {
+.logIn button {
   font-size: 1.5em;
   width: 312px;
   padding: 10px 0;

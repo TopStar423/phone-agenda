@@ -1,9 +1,12 @@
 import React from 'react';
 import "./List.css";
 
-const List = () => {
+const List = ({podcast_title, children}) => {
   return (
-	  <div>
+  	<div>
+		  <div className="list-box">
+		  	{children}
+		  </div>
 	  </div>
 	);  
 };
