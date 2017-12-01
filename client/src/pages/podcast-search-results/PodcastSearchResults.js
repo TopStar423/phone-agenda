@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PodcastCard from "../../components/podcast-card/PodcastCard";
 import LandingPagePodcastCard from "../../components/landing-page-podcast-card/LandingPagePodcastCard";
 import List from "../../components/list/List";
 import API from "./../../utils/API";

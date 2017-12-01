@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Input from "../../components/input/Input";
 import Searchbar from "../../components/search-bar/Searchbar";
 import PodcastCard from "../../components/podcast-card/PodcastCard";
 import EpisodeCard from "../../components/episode-card/EpisodeCard";
@@ -24,7 +23,7 @@ class PodcastHomePage extends Component {
       podcast_title: res.data.rss.title,
       podcast_description: res.data.rss.description,
       podcast_url: res.data.rss.url,
-      image: res.data.rss.image,
+      image: res.data.artworkUrl,
       episodes: res.data.rss.items
     }))
       .catch(err => console.log(err));
@@ -38,7 +37,7 @@ class PodcastHomePage extends Component {
   }
 
   handleStripHTML = (description) => {
-    var stripped = description.replace(/<[^>]+>/g, '');
+    var stripped = description.replace(/<[^>]+>/g, "");
     var decoded = he.decode(stripped)
     return decoded;
   }
@@ -82,6 +81,7 @@ class PodcastHomePage extends Component {
                 return (
                   <EpisodeCard
                     key={index}
+                    podcast_title={this.state.podcast_title}
                     episode_title={episode.title}
                     episode_description={episode.description}
                     episode_release_date={episode.released}

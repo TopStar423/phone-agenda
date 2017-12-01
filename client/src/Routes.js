@@ -13,25 +13,25 @@ import './Routes.css';
 
 
 class Routes extends Component {
-   state = {
+  state = {
 
-   }
+  }
 
-    render(){
-      return (
-        <div className="routes">
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/podcast-home/:id" component={PodcastHomePage} />
-          <Route exact path="/search-results/:id" component={PodcastSearchResults}/>
-          <Route exact path="/profile" component={ProfilePage}/>
-          <Route exact path="/episode" component={EpisodePage}/>
-          <Route exact path="/home" component={UserHomePage}/>
-          <Route exact path="/settings" component={AccountSettings}/>
-          <Route exact path="/signup" component={SignUp}/>
-          <Route exact path="/login" component={LogIn}/>
-        </div>
-      );
-    };
+  render(){
+    return (
+      <div className="routes">
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/podcast-home/:id" component={PodcastHomePage} />
+        <Route exact path="/search-results/:id" component={PodcastSearchResults}/>
+        <Route exact path="/profile" component={ProfilePage}/>
+        <Route exact path="/episode/:pod_id/:ep_id" component={EpisodePage}/>
+        <Route exact path="/home" component={UserHomePage}/>
+        <Route exact path="/settings" component={AccountSettings}/>
+        <Route exact path="/signup" component={SignUp}/>
+        <Route exact path="/login" component={LogIn}/>
+      </div>
+    );
+  };
 }
 
 export default Routes;
