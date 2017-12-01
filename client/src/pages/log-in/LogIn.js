@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import "./LogIn.css";
+import API from "../../utils/API.js";
 
-class SignUp extends Component {
+class Login extends Component {
   state = {
     username: "",
     password: ""
@@ -18,7 +19,14 @@ class SignUp extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-
+    API.login({
+      username: this.state.username, 
+      password: this.state.password
+    })
+      .then(res =>
+        console.log(res)
+      )
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -44,11 +52,11 @@ class SignUp extends Component {
               <label>Password: </label>
               <Input
                 onChange={this.handleInputChange}
-                value={this.state.password1}
-                name="password1"
+                value={this.state.password}
+                name="password"
                 type="text"
                 className="form-control"
-                id="password1"
+                id="password"
                 required=""
               />
             </div>
@@ -57,7 +65,7 @@ class SignUp extends Component {
           <Button
             value="Submit"
             label="Log In"
-            onClick={this.handleFormSubmit}
+            onSubmit={this.handleFormSubmit}
           />
         </form>
       </div>
@@ -65,4 +73,4 @@ class SignUp extends Component {
   };
 }
 
-export default SignUp;
+export default Login;

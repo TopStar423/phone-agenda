@@ -5,5 +5,9 @@ module.exports = function(req, res, next) {
     return next();
   }
   // If the user isnt' logged in, redirect them to the login page
-  return res.redirect("/");
+  return res.json({
+  	"status": 401,
+  	"message": "401: Not Authorized",
+  	"statusCat": "https://http.cat/401"
+  });
 };
