@@ -1,3 +1,7 @@
+.account-settings-wrapper {
+  width: 100%;
+}
+
 .accountSettings {
   width: 100%;
   display: flex;
