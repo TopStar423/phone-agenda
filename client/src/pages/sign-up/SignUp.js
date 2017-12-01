@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
+import Header from "../../components/partials/header/Header";
 import "./SignUp.css";
 
 class SignUp extends Component {
@@ -36,57 +37,60 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div className="signUp">
-        <form>
-          <h2>Sign Up</h2>
-          <div> 
-            <div className="form-field">
-              <label>Username: </label>
-              <Input   
-                onChange={this.handleInputChange} 
-                value={this.state.username}
-                name="username"
-                type="text"
-                className="form-control"
-                id="username"
-                required=""
-              />
-            </div>
+      <div className="sign-up-wrapper">
+        <Header />
+        <div className="signUp">
+          <form>
+            <h2>Sign Up</h2>
+            <div>
+              <div className="form-field">
+                <label>Username: </label>
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.username}
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  required=""
+                />
+              </div>
 
-            <div className="form-field">
-              <label>Email: </label>
-              <Input 
-                onChange={this.handleInputChange} 
-                value={this.state.email}
-                name="email"
-                type="text"
-                className="form-control"
-                id="email"
-                required=""
-               />
-            </div>
+              <div className="form-field">
+                <label>Email: </label>
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.email}
+                  name="email"
+                  type="text"
+                  className="form-control"
+                  id="email"
+                  required=""
+                />
+              </div>
 
-            <div className="form-field">
-              <label>Password: </label>
-              <Input 
-                onChange={this.handleInputChange} 
-                value={this.state.password}
-                name="password"
-                type="text"
-                className="form-control"
-                id="password"
-                required=""
-              />
-            </div>
+              <div className="form-field">
+                <label>Password: </label>
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.password}
+                  name="password"
+                  type="text"
+                  className="form-control"
+                  id="password"
+                  required=""
+                />
+              </div>
 
-          </div>
-          <Button
-            value="Submit"
-            type="submit"
-            label="Save"
-            onSubmit={this.handleFormSubmit}
-          />
-        </form>
+            </div>
+            <Button
+              value="Submit"
+              type="submit"
+              label="Save"
+              onSubmit={this.handleFormSubmit}
+            />
+          </form>
+        </div>
       </div>
     );
   };

@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PodcastCard from "../../components/podcast-card/PodcastCard";
 import CommentCard from "../../components/comment-card/CommentCard";
 import List from "../../components/list/List";
+import Header from "../../components/partials/header/Header";
+import {Link} from "react-router-dom";
+import './UserHomePage.css'
 
 class UserHomePage extends Component {
   state = {
@@ -12,50 +15,55 @@ class UserHomePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="uhp-wrapper">
+        <Header>
+          <Link to="/">Log Out</Link>
+        </Header>
         <div>
-          {(this.state.podcasts.length === 0) ? (
-            <li>
-              <h3><em>No podcasts to display.</em></h3>
-            </li>
-          ) : (
           <div>
-            <List length={this.state.podcasts.length}>
-              {this.state.podcasts.map(podcast => {
-                return (
-                  <PodcastCard
-                    image={this.state.podcast.image}
-                    podcast_title={this.state.podcast.title}
-                    podcast_description={this.state.podcast.description}
-                    subscribed={this.state.podcast.subscribed}
-                  />
-                );
-              })}
-            </List>
+            {(this.state.podcasts.length === 0) ? (
+              <li>
+                <h3><em>No podcasts to display.</em></h3>
+              </li>
+            ) : (
+              <div>
+                <List length={this.state.podcasts.length}>
+                  {this.state.podcasts.map(podcast => {
+                    return (
+                      <PodcastCard
+                        image={this.state.podcast.image}
+                        podcast_title={this.state.podcast.title}
+                        podcast_description={this.state.podcast.description}
+                        subscribed={this.state.podcast.subscribed}
+                      />
+                    );
+                  })}
+                </List>
+              </div>
+            )}
           </div>
-          )}
-        </div>
-        <div>
-          {(this.state.podcast_comments.length === 0) ? (
+          <div>
+            {(this.state.podcast_comments.length === 0) ? (
               <li>
                 <h3><em>No comments to display.</em></h3>
               </li>
             ) : (
-            <div> 
-              <List length={this.state.podcast_comments.length}>
-                {this.state.podcast_comments.map(comment => {
-                  return (
-                    <CommentCard
-                      key={comment.title}
-                      author={comment.author}
-                      comment_timestamp={comment.timestamp}
-                      message={comment.message}
-                    />
-                  );
-                })}
-              </List>
-            </div>
+              <div>
+                <List length={this.state.podcast_comments.length}>
+                  {this.state.podcast_comments.map(comment => {
+                    return (
+                      <CommentCard
+                        key={comment.title}
+                        author={comment.author}
+                        comment_timestamp={comment.timestamp}
+                        message={comment.message}
+                      />
+                    );
+                  })}
+                </List>
+              </div>
             )}
+          </div>
         </div>
       </div>
     );

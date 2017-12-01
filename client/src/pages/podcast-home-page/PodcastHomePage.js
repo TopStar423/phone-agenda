@@ -4,6 +4,8 @@ import Searchbar from "../../components/search-bar/Searchbar";
 import PodcastCard from "../../components/podcast-card/PodcastCard";
 import EpisodeCard from "../../components/episode-card/EpisodeCard";
 import List from "../../components/list/List";
+import Header from './../../components/partials/header/Header';
+import {Link} from "react-router-dom";
 
 import API from "./../../utils/API";
 import he from "he";
@@ -15,7 +17,8 @@ class PodcastHomePage extends Component {
     podcast_description: "",
     podcast_url: "",
     image: "",
-    episodes: []
+    episodes: [],
+    userId: ""
   }
 
   componentDidMount() {
@@ -53,46 +56,58 @@ class PodcastHomePage extends Component {
     //console.log("Podcast Home Page: " + this.state.podcast_title);
     //this.listEpisodes();
     return (
-      <div>
-        <div className="podcast-homepage">
-          <PodcastCard
-            podcast_description={this.state.podcast_description}
-            podcast_title={this.props.match.params.id}
-            podcast_url={this.state.podcast_url}
-            image={this.state.image}
-          />
-        </div>
-
-        {this.state.episodes.length === 0 ? (
-          <h3><em>No episodes found.</em></h3>
-        ) : (
-          <div className="results-box">
-            <div className="title-search">
-              <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
-              <div className="episode-search">
-                <h2>Find an episode:</h2>
-                <Searchbar
-                  handleInputChange={this.handleInputChange}
-                  podcast_title={this.state.podcast_title}
-                />
-              </div>
+      <div className="podcast-homepage-wrapper">
+        <Header>
+          {!this.state.userId ? (
+            <div>
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log In</Link>
             </div>
-            <List>
-              {this.state.episodes.map((episode, index) => {
-                return (
-                  <EpisodeCard
-                    key={index}
-                    episode_title={episode.title}
-                    episode_description={episode.description}
-                    episode_release_date={episode.released}
-                    url={episode.enclosures[0].url}
-                    handleStripHTML={this.handleStripHTML}
-                  />
-                );
-              })}
-            </List>
+          ) : (
+            <Link to="/">Log Out</Link>
+          )}
+        </Header>
+        <div>
+          <div className="podcast-homepage">
+            <PodcastCard
+              podcast_description={this.state.podcast_description}
+              podcast_title={this.props.match.params.id}
+              podcast_url={this.state.podcast_url}
+              image={this.state.image}
+            />
           </div>
-        )}
+
+          {this.state.episodes.length === 0 ? (
+            <h3><em>No episodes found.</em></h3>
+          ) : (
+            <div className="results-box">
+              <div className="title-search">
+                <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
+                <div className="episode-search">
+                  <h2>Find an episode:</h2>
+                  <Searchbar
+                    handleInputChange={this.handleInputChange}
+                    podcast_title={this.state.podcast_title}
+                  />
+                </div>
+              </div>
+              <List>
+                {this.state.episodes.map((episode, index) => {
+                  return (
+                    <EpisodeCard
+                      key={index}
+                      episode_title={episode.title}
+                      episode_description={episode.description}
+                      episode_release_date={episode.released}
+                      url={episode.enclosures[0].url}
+                      handleStripHTML={this.handleStripHTML}
+                    />
+                  );
+                })}
+              </List>
+            </div>
+          )}
+        </div>
       </div>
     );
   };

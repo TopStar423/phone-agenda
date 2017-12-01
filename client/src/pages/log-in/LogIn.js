@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
+import Header from './../../components/partials/header/Header';
 import "./LogIn.css";
 import API from "../../utils/API.js";
 
@@ -31,22 +32,25 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="logIn">
-        <form>
-          <h2>Log In</h2>
-          <div>
-            <div className="form-field">
-              <label>Username: </label>
-              <Input
-                onChange={this.handleInputChange}
-                value={this.state.username}
-                name="username"
-                type="text"
-                className="form-control"
-                id="username"
-                required=""
-              />
-            </div>
+      <div className="log-in-wrapper">
+        <Header />
+        <div className="logIn">
+          <form>
+            <h2>Log In</h2>
+            <div>
+              <div className="form-field">
+                <label>Username: </label>
+                <Input
+                  onChange={this.handleInputChange}
+                  value={this.state.username}
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  required=""
+                />
+              </div>
+
 
             <div className="form-field">
               <label>Password: </label>
@@ -68,6 +72,7 @@ class Login extends Component {
             onSubmit={this.handleFormSubmit}
           />
         </form>
+
       </div>
     );
   };
