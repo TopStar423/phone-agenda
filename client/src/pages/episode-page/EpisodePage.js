@@ -18,11 +18,11 @@ class EpisodePage extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      podcast_title: this.props.match.params.pod_id,
-      episode_title: this.props.match.params.ep_id,
-      episode: {}
-    })
+    var replaced = this.props.match.params.pod_id.split(' ').join('+');
+    API.searchEpisodes(replaced).then(res => this.setState({
+      episodes: res.data.rss.items
+    }))
+      .catch(err => console.log(err));
   }
 
   handleStripHTML = (description) => {
@@ -32,48 +32,46 @@ class EpisodePage extends Component {
     return decoded;
   }
 
-  getEpisode = () => {
-    var replaced = this.props.match.params.pod_id.split(' ').join('+');
-    API.searchEpisodes(replaced).then(res => this.setState({
-      episodes: res.data.rss.items
-    }))
-      .catch(err => console.log(err));
-
-    for(var i = 0; i < this.state.episodes.length; i++){
-      //console.log(this.state.episodes[i]);
-      if(this.state.episodes[i].episode_title === this.state.episode_title){
-        return this.state.episode = this.state.episodes[i];
-      }
-    }
-  }
-
   listEpisodes = () => {
     for (var i = 0; i < this.state.episodes.length; i++) {
       console.log(this.state.episodes[i]);
     }
   }
 
-  render() {
-    console.log(this.props.match.params.ep_id);
-    return (
-      
-      <div>
+  getEpisode = () => {
+    var ep_id = this.props.match.params.ep_id;
+    ep_id = ep_id.trim();
+    
+    for(var i = 0; i < this.state.episodes.length; i++){
+      var ep_title = this.state.episodes[i].title;
+      ep_title = ep_title.trim();
 
-          <EpisodeCard
-            key={this.state.podcast_title}
-            podcast_title={this.state.podcast_title}
-            episode_title={this.state.episode.title}
-            episode_description={this.state.episode.description}
-            episode_release_date={this.state.episode.released}
-            handleStripHTML={this.handleStripHTML}
-          />
+      if(ep_title == ep_id){
+        this.setState({
+          episode: this.state.episodes[i]
+        });
+        break;
+      }
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <EpisodeCard
+          key={this.state.podcast_title}
+          podcast_title={this.state.podcast_title}
+          episode_title={this.state.episode.title}
+          episode_description={this.state.episode.description}
+          episode_release_date={this.state.episode.released}
+          handleStripHTML={this.handleStripHTML}
+        />
 
       {this.state.episode_comments.length === 0 ? (
         <li>
           <h3><em>No comments to display.</em></h3>
         </li>
-      ) : (
-      
+      ) : (      
       <div>
         <AddComment />
         <List length={this.state.episode_comments.length}>
