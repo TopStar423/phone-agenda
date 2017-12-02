@@ -3,12 +3,12 @@ import "./List.css";
 
 const List = ({children}) => {
   return (
-  	<div>
-		  <div className="list-box">
-		  	{children}
-		  </div>
-	  </div>
-	);  
+    <div className="list-container">
+      <ul className="list-group">
+        {children}
+      </ul>
+    </div>
+  );
 };
 
 export default List;

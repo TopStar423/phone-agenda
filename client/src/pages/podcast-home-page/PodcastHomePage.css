@@ -4,6 +4,23 @@
   margin-top: 40px;
 }
 
+.podcast-homepage .podcast-box {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.podcast-homepage .podcast-box button {
+  background-color: #9ACD32;
+  color: #fff;
+}
+
+.podcast-homepage .podcast-box .title img {
+  height: 150px;
+  width: 150px;
+  margin-right: 20px;
+}
+
 .results-box {
   display: flex;
   flex-direction: column;

@@ -15,7 +15,7 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .home-wrapper .home-main .sidebar li {
