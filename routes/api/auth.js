@@ -52,7 +52,7 @@ console.log (err);
                             sequelizeErrors.password = "Password must be at least 8 characters";
                             break;
                         case "email":
-                            sequelizeErrors.password = "Please enter a valid email";
+                            sequelizeErrors.email = "Please enter a valid email";
                             break;                        
                     }
                 }
