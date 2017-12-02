@@ -5,6 +5,7 @@ import List from "../../components/list/List";
 import Header from "../../components/partials/header/Header";
 import {Link} from "react-router-dom";
 import './UserHomePage.css'
+import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
 
 class UserHomePage extends Component {
   state = {
@@ -15,12 +16,12 @@ class UserHomePage extends Component {
 
   render() {
     return (
-      <div className="uhp-wrapper">
+      <div className="home-wrapper">
         <Header>
           <Link to="/">Log Out</Link>
         </Header>
-        <div>
-          <div>
+        <div className="home-main">
+          <div className="sidebar">
             {(this.state.podcasts.length === 0) ? (
               <li>
                 <h3><em>No podcasts to display.</em></h3>
@@ -30,7 +31,7 @@ class UserHomePage extends Component {
                 <List length={this.state.podcasts.length}>
                   {this.state.podcasts.map(podcast => {
                     return (
-                      <PodcastCard
+                      <PodcastThumbnail
                         image={this.state.podcast.image}
                         podcast_title={this.state.podcast.title}
                         podcast_description={this.state.podcast.description}
@@ -42,7 +43,7 @@ class UserHomePage extends Component {
               </div>
             )}
           </div>
-          <div>
+          <div className="feed">
             {(this.state.podcast_comments.length === 0) ? (
               <li>
                 <h3><em>No comments to display.</em></h3>

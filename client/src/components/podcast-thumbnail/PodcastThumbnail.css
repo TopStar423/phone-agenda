@@ -1,4 +1,5 @@
-.podcast-thumbnail img {
-	width: 200px;
-	height: 200px;
+.landing-page-podcast-box {
+  margin: 10px;
+  width: 100px;
+  text-align: center;
 }

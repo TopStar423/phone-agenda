@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PodcastCard from "../../components/podcast-card/PodcastCard";
-import LandingPagePodcastCard from "../../components/landing-page-podcast-card/LandingPagePodcastCard";
+import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
 import List from "../../components/list/List";
 import API from "./../../utils/API";
 import Header from './../../components/partials/header/Header';
@@ -61,12 +61,10 @@ class PodcastSearchResults extends Component {
               <List>
                 {this.state.podcasts.map((podcast, index) => {
                   return (
-                    <LandingPagePodcastCard
+                    <PodcastThumbnail
                       key={index}
                       podcast_title={podcast.collectionName}
-                      podcast_release_date={podcast.releaseDate}
                       image={podcast.artworkUrl100}
-                      handlePodcastSelection={this.props.handlePodcastSelection}
                     />
                   );
                 })}
