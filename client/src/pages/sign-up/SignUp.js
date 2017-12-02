@@ -3,6 +3,8 @@ import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import Header from "../../components/partials/header/Header";
 import "./SignUp.css";
+import API from "../../utils/API.js";
+
 
 class SignUp extends Component {
   constructor(props) {
@@ -33,6 +35,15 @@ class SignUp extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    API.signup({
+      username: this.state.username,
+      email: this.state.email, 
+      password: this.state.password
+    })
+      .then(res =>
+         this.props.history.push('/')
+      )
+      .catch(err => console.log(err));
   };
 
   render() {
