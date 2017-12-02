@@ -74,7 +74,7 @@ class SignUp extends Component {
                 />
               </div>
 
-              {!this.state.errors.username ? null : <div>this.state.errors.username</div>}
+              {!this.state.errors.username ? null : <div>{this.state.errors.username}</div>}
 
               <div className="form-field">
                 <label>Email: </label>
@@ -89,7 +89,7 @@ class SignUp extends Component {
                 />
               </div>
 
-              {!this.state.errors.email ? null : <div>this.state.errors.email</div>}
+              {!this.state.errors.email ? null : <div>{this.state.errors.email}</div>}
 
               <div className="form-field">
                 <label>Password: </label>
@@ -104,7 +104,7 @@ class SignUp extends Component {
                 />
               </div>
 
-              {!this.state.errors.password ? null : <div>this.state.errors.password</div>}
+              {!this.state.errors.password ? null : <div>{this.state.errors.password}</div>}
 
             </div>
             <Button
