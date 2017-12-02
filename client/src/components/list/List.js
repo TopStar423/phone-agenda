@@ -1,7 +1,7 @@
 import React from 'react';
 import "./List.css";
 
-const List = ({podcast_title, children}) => {
+const List = ({children}) => {
   return (
   	<div>
 		  <div className="list-box">

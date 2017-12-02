@@ -24,33 +24,44 @@ class UserHomePage extends Component {
           <div className="sidebar">
             <h1>Your Podcasts</h1>
             {!this.state.podcasts.length ? (
+              <div>
               <li>
                 {/*<h3><em>No podcasts to display.</em></h3>*/}
                 <PodcastThumbnail
                   image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
                   podcast_title="Serial"
                 />
-                <PodcastThumbnail
-                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
-                  podcast_title="Serial"
-                />
-                <PodcastThumbnail
-                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
-                  podcast_title="Serial"
-                />
-                <PodcastThumbnail
-                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
-                  podcast_title="Serial"
-                />
-                <PodcastThumbnail
-                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
-                  podcast_title="Serial"
-                />
-                <PodcastThumbnail
-                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
-                  podcast_title="Serial"
-                />
               </li>
+              <li>
+              {/*<h3><em>No podcasts to display.</em></h3>*/}
+              <PodcastThumbnail
+                image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                podcast_title="Serial"
+              />
+              </li>
+              <li>
+              {/*<h3><em>No podcasts to display.</em></h3>*/}
+              <PodcastThumbnail
+              image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+              podcast_title="Serial"
+              />
+              </li>
+              <li>
+            {/*<h3><em>No podcasts to display.</em></h3>*/}
+              <PodcastThumbnail
+              image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+              podcast_title="Serial"
+              />
+              </li>
+              <li>
+              {/*<h3><em>No podcasts to display.</em></h3>*/}
+              <PodcastThumbnail
+              image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+              podcast_title="Serial"
+              />
+              </li>
+              </div>
+
             ) : (
               <div>
                 <List length={this.state.podcasts.length}>
