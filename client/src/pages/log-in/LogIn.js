@@ -24,16 +24,16 @@ class Login extends Component {
       username: this.state.username, 
       password: this.state.password
     })
-      .then(res =>
-         // this.props.history.push('/')
-         // console.log(res)
-        this.setState({
-          error: res.message
-        })
-      )
-      .then(res =>
-        this.props.history.push('/')
-      )
+      .then(res => {
+        if (res.status > 200) {
+          this.setState({
+            error: res.data.message
+          });
+          console.log(res.statusCat);
+        } else {
+          this.props.history.push('/home');
+        }
+      })
       .catch(err => console.log(err));
   };
 

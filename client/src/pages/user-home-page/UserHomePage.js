@@ -22,7 +22,7 @@ class UserHomePage extends Component {
         </Header>
         <div className="home-main">
           <div className="sidebar">
-            {(this.state.podcasts.length === 0) ? (
+            {!this.state.podcasts.length ? (
               <li>
                 <h3><em>No podcasts to display.</em></h3>
               </li>
@@ -44,7 +44,7 @@ class UserHomePage extends Component {
             )}
           </div>
           <div className="feed">
-            {(this.state.podcast_comments.length === 0) ? (
+            {!this.state.podcast_comments.length ? (
               <li>
                 <h3><em>No comments to display.</em></h3>
               </li>

@@ -4,4 +4,13 @@
 
 .home-wrapper .home-main {
   border: 1px solid black;
+  display: flex;
+}
+
+.home-wrapper .home-main .sidebar {
+  border: 1px solid black;
+}
+
+.home-wrapper .home-main .feed {
+  border: 1px solid black;
 }
