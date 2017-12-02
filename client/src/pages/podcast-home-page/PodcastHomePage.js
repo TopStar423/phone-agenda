@@ -126,6 +126,11 @@ class PodcastHomePage extends Component {
     });    
   }
 
+  encodeUrl = (url) =>{
+    var result = encodeURIComponent(url);
+    return result;
+  }
+
   render() {
     return (
       <div>
@@ -163,6 +168,7 @@ class PodcastHomePage extends Component {
                     episode_url={episode.url}
                     url={episode.mp3}
                     handleStripHTML={this.handleStripHTML}
+                    encodeUrl={this.encodeUrl}
                   />
                 );
               })}

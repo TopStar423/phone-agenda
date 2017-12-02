@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import Button from "../button/Button";
 import "./EpisodeCard.css";
 
-const EpisodeCard = (props) =>
+const EpisodeCard = (props) => (
 	<div className="episode-card-box"> 
-	  <Link to={`/episode/${props.podcast_title}/${props.episode_url}`}>
+	  <Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_url)}`}>
 	  	<h2>{props.episode_title}</h2>
 	  </Link>
   	
@@ -14,6 +14,7 @@ const EpisodeCard = (props) =>
   	
   	<a href={props.url}><Button label="Play Episode" /></a>
   	<Button className="episodeButton" label="Comments" />
-  </div>;
+  </div>
+);
 
 export default EpisodeCard;
