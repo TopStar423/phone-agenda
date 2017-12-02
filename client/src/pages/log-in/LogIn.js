@@ -25,7 +25,6 @@ class Login extends Component {
       password: this.state.password
     })
       .then(res => {
-        console.log(res);
         if (res.status < 400) {
             this.props.history.push('/home');
         }
