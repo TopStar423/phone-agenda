@@ -12,18 +12,17 @@ class EpisodePage extends Component {
   state = {
     episode: {},
     podcast_title: "",
-    episode_title: "",
-    episodes: [],
     episode_comments: []
   }
 
   componentDidMount() {
+    console.log(this.props.match.params);
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
-    API.searchEpisodes(replaced).then(res => this.setState({
-      episodes: res.data.rss.items
-    }))
-      .catch(err => console.log(err));
-    this.getEpisode();
+    // API.searchEpisode(replaced, this.props.match.params.ep_url).then(res => this.setState({
+    //   episode: res.data.rss,
+    //   podcast_title: replaced
+    // }))
+    //   .catch(err => console.log(err));
   }
 
   handleStripHTML = (description) => {
@@ -57,8 +56,10 @@ class EpisodePage extends Component {
   }
 
   render() {
+    console.log(this.props.match.params);
     return (
       <div>
+      <h1>Why the fuck aren't you rendering anything?</h1>
         <EpisodeCard
           key={this.state.podcast_title}
           podcast_title={this.state.podcast_title}

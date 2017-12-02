@@ -10,65 +10,14 @@ import he from "he";
 import "./PodcastHomePage.css";
 
 
-// res.data.rss.items[0].enclosures[0].url is the other location; is any of this standardized??
 class PodcastHomePage extends Component {
   state = {
     podcast_title: "",
     podcast_description: "",
     podcast_url: "",
     image: "",
-    episodes: []
-  }
-
-  episodeSearch = (title) => {
-    var tempArr = [];
-    var resultsArr = [];
-
-    // convert search term(s) into array of words
-    var titleArr = title.match(/\b\w+?\b/g).map(function(word) {
-      return word.toLowerCase();
-    });
-
-    // now, go through the episodes array, all the titles
-    for(var i = 0; i < this.state.episodes.length; i++){
-      tempArr[i] = -1;
-      resultsArr[i] = -1;
-      
-      // convert all the episode titles into another array of words
-      var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
-        return word.toLowerCase();
-      });
-
-      // now, record all the matches
-      for(var j = 0; j < titleArr.length; j++){
-        for(var k = 0; k < epTitleArr.length; k++){
-          if(titleArr[j] === epTitleArr[k]){
-            tempArr[i]++; 
-            // tempArr records all the scores in each index
-
-            resultsArr[i] = this.state.episodes[i];
-          }
-        }
-      }
-    }
-
-    //tempArr.sort(function(a, b){return b-a})
-
-    for(var x = 0; x < resultsArr.length; x++){
-      if(resultsArr[x] === -1){
-        resultsArr.splice(x--, 1);
-      }
-    }
-
-    // for(var x = 0; x < resultsArr.length; x++){
-    //   console.log(resultsArr[x]);
-    // }
-
-    this.setState({
-      episodes: resultsArr
-    });
-    
-    
+    episodes: [],
+    episode_title: ""
   }
 
   componentDidMount() {
@@ -79,9 +28,9 @@ class PodcastHomePage extends Component {
       const episodesArr = res.data.rss.items.map(function(item) {
         let mp3 = "";
         try {
-            mp3 = item.media.content[0].url;
+          mp3 = item.media.content[0].url;
         } catch(e) {
-            mp3 = "";
+          mp3 = "";
         }
 
         try {
@@ -123,6 +72,60 @@ class PodcastHomePage extends Component {
     }
   }
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.episodeSearch();
+  }
+
+  episodeSearch = (title) => {
+    var tempArr = [];
+    var resultsArr = [];
+
+    // convert search term(s) into array of words
+    var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
+      return word.toLowerCase();
+    });
+
+    // now, go through the episodes array, all the titles
+    for(var i = 0; i < this.state.episodes.length; i++){
+      tempArr[i] = -1;
+      resultsArr[i] = -1;
+      
+      // convert all the episode titles into another array of words
+      var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
+        return word.toLowerCase();
+      });
+
+      // now, record all the matches
+      for(var j = 0; j < titleArr.length; j++){
+        for(var k = 0; k < epTitleArr.length; k++){
+          if(titleArr[j] === epTitleArr[k]){
+            tempArr[i]++; 
+            // tempArr records all the scores in each index
+
+            resultsArr[i] = this.state.episodes[i];
+          }
+        }
+      }
+    }
+
+    //tempArr.sort(function(a, b){return b-a})
+
+    for(var x = 0; x < resultsArr.length; x++){
+      if(resultsArr[x] === -1){
+        resultsArr.splice(x--, 1);
+      }
+    }
+
+    // for(var x = 0; x < resultsArr.length; x++){
+    //   console.log(resultsArr[x]);
+    // }
+
+    this.setState({
+      episodes: resultsArr
+    });    
+  }
+
   render() {
     return (
       <div>
@@ -137,13 +140,14 @@ class PodcastHomePage extends Component {
         </div>
           <div className="results-box">
             <div className="title-search">
-              <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
+              <h1><strong>{this.state.episodes.length} Episodes Found</strong></h1>
               <div className="episode-search">
                 <h2>Find an episode:</h2>
                 <EpisodeSearchbar
                   handleInputChange={this.handleInputChange}
                   podcast_title={this.state.podcast_title}
-                  episodeSearch={this.episodeSearch}
+                  handleFormSubmit={this.handleFormSubmit}
+                  query={this.state.episode_title}
                 />
               </div>
             </div>
@@ -152,9 +156,11 @@ class PodcastHomePage extends Component {
                 return (
                   <EpisodeCard
                     key={index}
+                    podcast_title={this.state.podcast_title}
                     episode_title={episode.title}
                     episode_description={episode.description}
                     episode_release_date={episode.released}
+                    episode_url={episode.url}
                     url={episode.mp3}
                     handleStripHTML={this.handleStripHTML}
                   />

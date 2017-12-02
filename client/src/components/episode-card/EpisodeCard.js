@@ -5,10 +5,9 @@ import "./EpisodeCard.css";
 
 const EpisodeCard = (props) =>
 	<div className="episode-card-box"> 
-	  <Link to={`/episode/${props.podcast_title}/${props.episode_title}`}>
+	  <Link to={`/episode/${props.podcast_title}/${props.episode_url}`}>
 	  	<h2>{props.episode_title}</h2>
 	  </Link>
-
   	
   	<h2>{props.handleStripHTML(props.episode_description)}</h2>
   	<h2>{props.episode_release_date}</h2>
