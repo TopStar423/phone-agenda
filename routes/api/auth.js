@@ -9,9 +9,21 @@ const utils = require("../helpers");
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
-  router.post("/login", passport.authenticate("local"), function(req, res) {
-    res.json("/")
+  router.post("/login", function(req, res, next) {
+ 
+    passport.authenticate('local', function(err, user, info) {
+      console.log(info)
+      if (err) { return utils.respond(401, info, res) }
+      if (!user) { return utils.respond(401, info, res) }
+      req.logIn(user, function(err) {
+        if (err) { return utils.respond(401, info, res) }
+        return utils.respond(200, req.user, res);
+      });
+
+    })(req, res, next);
   });
+
+
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
