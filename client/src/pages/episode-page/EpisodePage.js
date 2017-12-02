@@ -23,6 +23,7 @@ class EpisodePage extends Component {
       episodes: res.data.rss.items
     }))
       .catch(err => console.log(err));
+    this.getEpisode();
   }
 
   handleStripHTML = (description) => {
@@ -40,13 +41,13 @@ class EpisodePage extends Component {
 
   getEpisode = () => {
     var ep_id = this.props.match.params.ep_id;
-    ep_id = ep_id.trim();
+    ep_id = ep_id.trim().split('%20').join(' ');
     
     for(var i = 0; i < this.state.episodes.length; i++){
       var ep_title = this.state.episodes[i].title;
       ep_title = ep_title.trim();
 
-      if(ep_title == ep_id){
+      if(ep_title === ep_id){
         this.setState({
           episode: this.state.episodes[i]
         });
