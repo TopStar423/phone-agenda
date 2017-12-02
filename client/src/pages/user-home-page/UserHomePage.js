@@ -22,9 +22,34 @@ class UserHomePage extends Component {
         </Header>
         <div className="home-main">
           <div className="sidebar">
+            <h1>Your Podcasts</h1>
             {!this.state.podcasts.length ? (
               <li>
-                <h3><em>No podcasts to display.</em></h3>
+                {/*<h3><em>No podcasts to display.</em></h3>*/}
+                <PodcastThumbnail
+                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                  podcast_title="Serial"
+                />
+                <PodcastThumbnail
+                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                  podcast_title="Serial"
+                />
+                <PodcastThumbnail
+                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                  podcast_title="Serial"
+                />
+                <PodcastThumbnail
+                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                  podcast_title="Serial"
+                />
+                <PodcastThumbnail
+                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                  podcast_title="Serial"
+                />
+                <PodcastThumbnail
+                  image="http://is4.mzstatic.com/image/thumb/Music71/v4/61/59/94/615994ff-21b5-9817-3e89-09b7e012336d/source/100x100bb.jpg"
+                  podcast_title="Serial"
+                />
               </li>
             ) : (
               <div>
@@ -34,8 +59,6 @@ class UserHomePage extends Component {
                       <PodcastThumbnail
                         image={this.state.podcast.image}
                         podcast_title={this.state.podcast.title}
-                        podcast_description={this.state.podcast.description}
-                        subscribed={this.state.podcast.subscribed}
                       />
                     );
                   })}
@@ -44,6 +67,7 @@ class UserHomePage extends Component {
             )}
           </div>
           <div className="feed">
+            <h1>Latest Comments</h1>
             {!this.state.podcast_comments.length ? (
               <li>
                 <h3><em>No comments to display.</em></h3>

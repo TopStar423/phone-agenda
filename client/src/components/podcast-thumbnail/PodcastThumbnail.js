@@ -4,9 +4,8 @@ import Button from "../button/Button";
 import "./PodcastThumbnail.css";
 
 const PodcastThumbnail = (props) =>
-  <div className="landing-page-podcast-box"> 
+  <div className="podcast-thumbnail">
   	<Link to={`/podcast-home/${props.podcast_title}`}><img src={props.image} /></Link>
-  	<h6>{props.podcast_title}</h6>
   </div>;
 
 export default PodcastThumbnail;

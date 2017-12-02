@@ -2,36 +2,36 @@
   width: 100%;
 }
 
-.logIn {
+.log-in {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.logIn form {
+.log-in form {
   margin-top: 100px;
 }
 
-.logIn h2 {
+.log-in h2 {
   font-size: 2.3em;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.logIn label {
+.log-in label {
   font-size: 1.7em;
 }
 
-.logIn .form-control {
+.log-in .form-control {
   font-size: 2em;
   padding: 5px;
 }
 
-.logIn .form-field {
+.log-in .form-field {
   margin-bottom: 20px;
 }
 
-.logIn button {
+.log-in button {
   font-size: 1.5em;
   width: 312px;
   padding: 10px 0;
