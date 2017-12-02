@@ -7,18 +7,16 @@ import API from "../../utils/API.js";
 
 
 class SignUp extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
+  state = {
+    username: "",
+    email: "",
+    password: "",
+    errors: {
       username: "",
       email: "",
       password: ""
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
+    }
+  };
 
 
   handleInputChange = event => {
@@ -37,11 +35,20 @@ class SignUp extends Component {
     event.preventDefault();
     API.signup({
       username: this.state.username,
-      email: this.state.email, 
+      email: this.state.email,
       password: this.state.password
     })
       .then(res =>
-         this.props.history.push('/')
+        this.props.history.push('/home')
+      )
+      .then(res =>
+        this.setState({
+          errors: {
+            username: res.message.username,
+            email: res.message.email,
+            password: res.message.password
+          }
+        })
       )
       .catch(err => console.log(err));
   };
@@ -49,7 +56,7 @@ class SignUp extends Component {
   render() {
     return (
       <div className="sign-up-wrapper">
-        <Header />
+        <Header/>
         <div className="signUp">
           <form>
             <h2>Sign Up</h2>
@@ -67,6 +74,8 @@ class SignUp extends Component {
                 />
               </div>
 
+              {!this.state.errors.username ? null : <div>this.state.errors.username</div>}
+
               <div className="form-field">
                 <label>Email: </label>
                 <Input
@@ -80,6 +89,8 @@ class SignUp extends Component {
                 />
               </div>
 
+              {!this.state.errors.email ? null : <div>this.state.errors.email</div>}
+
               <div className="form-field">
                 <label>Password: </label>
                 <Input
@@ -92,6 +103,8 @@ class SignUp extends Component {
                   required=""
                 />
               </div>
+
+              {!this.state.errors.password ? null : <div>this.state.errors.password</div>}
 
             </div>
             <Button

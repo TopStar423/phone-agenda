@@ -7,7 +7,8 @@ import API from "../../utils/API.js";
 class Login extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    error: ""
   };
 
   handleInputChange = event => {
@@ -25,7 +26,13 @@ class Login extends Component {
     })
       .then(res =>
          // this.props.history.push('/')
-         console.log(res)
+         // console.log(res)
+        this.setState({
+          error: res.message
+        })
+      )
+      .then(res =>
+        this.props.history.push('/')
       )
       .catch(err => console.log(err));
   };
@@ -61,6 +68,8 @@ class Login extends Component {
                 required=""
               />
             </div>
+
+            {!this.state.error ? null : <div>this.state.error</div>}
 
           </div>
           <Button
