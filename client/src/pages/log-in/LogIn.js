@@ -25,16 +25,22 @@ class Login extends Component {
       password: this.state.password
     })
       .then(res => {
-        if (res.status > 200) {
-          this.setState({
-            error: res.data.message
-          });
-          console.log(res.statusCat);
-        } else {
-          this.props.history.push('/home');
+        console.log(res);
+        if (res.status < 400) {
+            this.props.history.push('/home');
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        if(!err) return;
+        if(err.response.status >= 500) {
+          console.error(err);
+        } else {
+          console.log(err.response.data.statusCat);
+          this.setState({
+            error: err.response.data.message
+          });
+        }
+      });
   };
 
   render() {
@@ -69,7 +75,7 @@ class Login extends Component {
               />
             </div>
 
-            {!this.state.error ? null : <div>this.state.error</div>}
+            {!this.state.error ? null : <div>{this.state.error}</div>}
 
           </div>
           <Button
