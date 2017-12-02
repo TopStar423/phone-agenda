@@ -1,0 +1,12 @@
+.devLinks a {
+  margin: 10px;
+}
+
+.devLinks {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+  background-color: orange;
+}

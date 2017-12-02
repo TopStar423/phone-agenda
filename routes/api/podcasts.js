@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models/");
-
+const passport = require("../../config/passport");
+const isAuthenticated = require("../../config/middleware/isAuthenticated");
 
 //get all users
-router.get("/users", function (req, res) {
+router.get("/users", isAuthenticated, function (req, res) {
   db.users.findAll()
     .then(function (user) {
       res.json(user);
@@ -25,7 +26,7 @@ router.get("/comments/:podcastInfo", function (req, res) {
 
 
 // // post route to save save comment on current podcast episode page
-router.post("/comment/save/", function (req, res) {
+router.post("/comment/save", isAuthenticated, function (req, res) {
   db.comments.create(req.body, function (result) {
     console.log(result);
     // res.redirect("/");
@@ -33,7 +34,7 @@ router.post("/comment/save/", function (req, res) {
 });
 
 //get saved podcasts for logged in user
-router.get("/savedPodcast/:userID", function (req, res) {
+router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
   db.SavedPodcast.findAll({
     where: {
       userID: req.params.userID
@@ -44,7 +45,7 @@ router.get("/savedPodcast/:userID", function (req, res) {
 });
 
 // post route to save podcasts to logged in user's profile
-router.post("/savedPodcast/save/", function (req, res) {
+router.post("/savedPodcast/save/", isAuthenticated, function (req, res) {
   db.SavedPodcast.create(req.body, function (result) {
     console.log(result);
     // res.redirect("/");

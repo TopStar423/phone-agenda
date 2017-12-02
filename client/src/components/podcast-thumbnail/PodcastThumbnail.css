@@ -1,4 +1,3 @@
-.podcast-thumbnail img {
-	width: 200px;
-	height: 200px;
+.podcast-thumbnail {
+  margin: 10px;
 }

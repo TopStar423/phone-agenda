@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
-import LandingPagePodcastCard from "../../components/landing-page-podcast-card/LandingPagePodcastCard";
+import React, {Component} from 'react';
+import PodcastCard from "../../components/podcast-card/PodcastCard";
+import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
 import List from "../../components/list/List";
 import API from "./../../utils/API";
+import Header from './../../components/partials/header/Header';
+import {Link} from "react-router-dom";
+import './PodcastSearchResults.css';
 
 class PodcastSearchResults extends Component {
   state = {
     podcast_title: "",
     podcast_feed_url: "",
-    podcasts: []
+    podcasts: [],
+    userId: ""
   }
 
   componentDidMount() {
@@ -19,7 +24,7 @@ class PodcastSearchResults extends Component {
     API.searchPodcasts(replaced).then(res => this.setState({
       podcasts: res.data.results
     }))
-    .catch(err => console.log(err)); 
+      .catch(err => console.log(err));
   }
 
   handleInputChange = event => {
@@ -34,30 +39,40 @@ class PodcastSearchResults extends Component {
   };
 
   render() {
-   
+
     return (
-      <div>
-      {this.state.podcasts.length === 0 ? (
-          <h3><em></em></h3>
-        ) : (
-          <div>
-            <h1><strong>{this.state.podcasts.length} Results Found for: "{this.state.podcast_title}"</strong></h1>
-            <List>
-            {this.state.podcasts.map((podcast, index) => {
-              return (
-                <LandingPagePodcastCard
-                  key={index}
-                  podcast_title={podcast.collectionName}
-                  podcast_release_date={podcast.releaseDate}
-                  image={podcast.artworkUrl100}
-                  handlePodcastSelection={this.props.handlePodcastSelection}
-                />
-              );
-            })}
-            </List>
-          </div>
-        )}
-    </div>
+      <div className="search-results-wrapper">
+        <Header>
+          {!this.state.userId ? (
+            <div>
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log In</Link>
+            </div>
+          ) : (
+            <Link to="/">Log Out</Link>
+          )}
+        </Header>
+        <div>
+          {this.state.podcasts.length === 0 ? (
+            <h3><em></em></h3>
+          ) : (
+            <div>
+              <h1><strong>{this.state.podcasts.length} Results Found for: "{this.state.podcast_title}"</strong></h1>
+              <List>
+                {this.state.podcasts.map((podcast, index) => {
+                  return (
+                    <PodcastThumbnail
+                      key={index}
+                      podcast_title={podcast.collectionName}
+                      image={podcast.artworkUrl100}
+                    />
+                  );
+                })}
+              </List>
+            </div>
+          )}
+        </div>
+      </div>
     );
   };
 }

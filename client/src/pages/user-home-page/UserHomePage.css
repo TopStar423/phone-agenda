@@ -1,0 +1,31 @@
+.home-wrapper {
+  width: 100%;
+}
+
+.home-wrapper .home-main {
+  display: flex;
+  padding: 20px;
+  justify-content: space-around;
+  background: #ebe9e9;
+}
+
+.home-wrapper .home-main .sidebar {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.home-wrapper .home-main .sidebar li {
+  list-style: none;
+}
+
+.home-wrapper .home-main .feed {
+  width: 600px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.home-wrapper .home-main .feed li {
+  list-style: none;
+}
