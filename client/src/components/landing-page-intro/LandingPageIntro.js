@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import API from "./../../utils/API";
 import List from "../list/List";
-import LandingPagePodcastCard from "../landing-page-podcast-card/LandingPagePodcastCard";
+import PodcastThumbnail from "../podcast-thumbnail/PodcastThumbnail";
 import PodcastSearchResults from "../../pages/podcast-search-results/PodcastSearchResults"
 import Searchbar from "../search-bar/Searchbar";
 import "./LandingPageIntro.css";
