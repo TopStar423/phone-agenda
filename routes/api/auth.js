@@ -13,11 +13,11 @@ const utils = require("../helpers");
  
     passport.authenticate('local', function(err, user, info) {
       console.log(info)
-      if (err) { return utils.respond(401, info, res) }
-      if (!user) { return utils.respond(401, info, res) }
+      if (err) { return utils.respond(401, info.message, null, res) }
+      if (!user) { return utils.respond(401, info.message, null, res) }
       req.logIn(user, function(err) {
-        if (err) { return utils.respond(401, info, res) }
-        return utils.respond(200, req.user, res);
+        if (err) { return utils.respond(401, info.message, res) }
+        return utils.respond(200, info.message, req.user, res);
       });
 
     })(req, res, next);
