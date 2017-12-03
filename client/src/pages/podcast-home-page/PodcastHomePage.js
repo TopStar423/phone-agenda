@@ -39,10 +39,10 @@ class PodcastHomePage extends Component {
         try {
           mp3 = mp3.length > 1 ? mp3 : item.enclosures[0].url;
         } catch(e) {
-          mp3 = mp3.length > 1 ? mp3 : []
+          mp3 = mp3.length > 1 ? mp3 : [];
         }
         item.mp3 = mp3;
-        return item
+        return item;
       })
 
       that.setState({
@@ -166,7 +166,7 @@ class PodcastHomePage extends Component {
                 <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
                 <div className="episode-search">
                   <h2>Find an episode:</h2>
-                  <Searchbar
+                  <EpisodeSearchbar
                     handleInputChange={this.handleInputChange}
                     podcast_title={this.state.podcast_title}
                     handleFormSubmit={this.handleFormSubmit}
