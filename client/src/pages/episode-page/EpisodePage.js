@@ -19,12 +19,22 @@ class EpisodePage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params);
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
     API.searchEpisode(replaced, this.props.match.params.ep_url).then(res => this.setState({
       episode: res.data.rss,
       podcast_title: replaced
     }))
+      .catch(err => console.log(err));
+
+    this.getEpisodeComments();
+  }
+
+  getEpisodeComments = () => {
+    API.getEpisodeComments(this.props.match.params.pod_id, this.props.match.params.ep_id).then(res =>
+      this.setState({
+        episode_comments: res.data
+      })
+    )
       .catch(err => console.log(err));
   }
 
@@ -58,6 +68,23 @@ class EpisodePage extends Component {
     }
   }
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    API.saveComment({
+      comment: this.state.comment,
+      podcastName: this.props.match.params.pod_id,
+      podcastEpisodeName: this.props.match.params.ep_id,
+      userId: 1
+    }).then(this.getEpisodeComments());
+  }
+
+  handleInputChange = event =>{
+    const {name, value} = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
   render() {
     console.log(this.props.match.params);
     return (
@@ -81,28 +108,24 @@ class EpisodePage extends Component {
             episode_release_date={this.state.episode.released}
             handleStripHTML={this.handleStripHTML}
           />
-
-          {this.state.episode_comments.length === 0 ? (
-            <li>
-              <h3><em>No comments to display.</em></h3>
-            </li>
-          ) : (
             <div>
-              <AddComment/>
-              <List length={this.state.episode_comments.length}>
+              <AddComment
+              handleFormSubmit = {this.handleFormSubmit}
+              handleInputChange = {this.handleInputChange}
+              comment = {this.state.comment}
+              />
+              <List>
                 {this.state.episode_comments.map(comment => {
                   return (
                     <CommentCard
-                      key={comment.title}
-                      author={comment.author}
-                      comment_timestamp={comment.timestamp}
-                      message={comment.message}
+                      key={comment.id}
+                      comment_timestamp={comment.createdAt}
+                      message={comment.comment}
                     />
                   );
                 })}
               </List>
             </div>
-          )}
         </div>
       </div>
     )

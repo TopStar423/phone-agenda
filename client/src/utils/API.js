@@ -2,17 +2,14 @@ import axios from "axios";
 
 export default {
   searchPodcasts: function (searchTerm) {
-    // find all podcasts associated with given search term
     return axios.get("https://itunes.apple.com/search?entity=podcast&term=" + searchTerm);
   },
 
   searchEpisodes: function (searchTerm) {
-    // find all episodes of a given podcast name
     return axios.get("/api/episodes/search/" + searchTerm);
   },
 
   searchEpisode: function (pod_title, ep_url) {
-    console.log("API: " + ep_url);
     return axios.get("/api/episodes/search-one/" + pod_title + "/" + ep_url);
   },
 
@@ -23,8 +20,24 @@ export default {
   signup: function (newUserData) {
     return axios.post("/api/auth/signup", newUserData);
   },
-  
+
   logout: function () {
     return axios.get("/api/auth/logout");
+  },
+
+  saveComment: function(newComment){
+    return axios.post("/api/comments/save", newComment);
+  },
+
+  getEpisodeComments: function(pod_name, pod_ep_name){
+    return axios.get("/api/comments/" + pod_name + "/" + pod_ep_name);
+  },
+
+  getUserComments: function(userId){
+    return axios.get("/api/comments/" + userId);
+  }, 
+
+  getUserPodcasts: function(userId){
+    return axios.get("/api/savedPodcast/" + userId);
   }
 };

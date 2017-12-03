@@ -6,12 +6,28 @@ import Header from "../../components/partials/header/Header";
 import {Link} from "react-router-dom";
 import './UserHomePage.css'
 import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
+import API from "./../../utils/API";
 
+
+// user-home-page == all the stuff a user follows
 class UserHomePage extends Component {
   state = {
     podcasts: [],
-    podcast_comments: []
+    episode_comments: []
   };
+
+  componentDidMount() {
+    this.getEpisodeComments();
+  }
+
+  getEpisodeComments = () => {
+    API.getEpisodeComments(1).then(res =>
+      this.setState({
+        episode_comments: res.data
+      })
+    )
+      .catch(err => console.log(err));
+  }
 
 
   render() {
@@ -44,26 +60,19 @@ class UserHomePage extends Component {
           </div>
           <div className="feed">
             <h1>Latest Comments</h1>
-            {!this.state.podcast_comments.length ? (
-              <li>
-                <h3><em>No comments to display.</em></h3>
-              </li>
-            ) : (
               <div>
-                <List length={this.state.podcast_comments.length}>
-                  {this.state.podcast_comments.map(comment => {
+                <List>
+                  {this.state.episode_comments.map(comment => {
                     return (
                       <CommentCard
-                        key={comment.title}
-                        author={comment.author}
-                        comment_timestamp={comment.timestamp}
-                        message={comment.message}
+                        key={comment.id}
+                        comment_timestamp={comment.createdAt}
+                        message={comment.comment}
                       />
                     );
                   })}
                 </List>
               </div>
-            )}
           </div>
         </div>
       </div>

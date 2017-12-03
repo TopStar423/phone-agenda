@@ -27,7 +27,7 @@ class PodcastHomePage extends Component {
   componentDidMount() {
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
-    
+
     API.searchEpisodes(replaced).then(function(res){
       const episodesArr = res.data.rss.items.map(function(item) {
         let mp3 = "";
