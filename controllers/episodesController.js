@@ -6,6 +6,7 @@ const async = require("async");
 module.exports = {
   findAll: function(req, res) {
     var searchTerm = req.params.id;
+        console.log(searchTerm);
     var url = "https://itunes.apple.com/search?entity=podcast&term=" + searchTerm;
 
     async.waterfall([
@@ -21,7 +22,7 @@ module.exports = {
             //console.log(rss);
             if(err){
               console.log(err);
-              return callback(err)
+              return callback(err);
             }
             callback(null, artworkUrl, rss); // here
           });

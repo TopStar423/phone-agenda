@@ -19,7 +19,6 @@ class EpisodePage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params);
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
     API.searchEpisode(replaced, this.props.match.params.ep_url).then(res => this.setState({
       episode: res.data.rss,

@@ -2,7 +2,7 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "password1234",
   database: "podtalk_db"
 });
 connection.connect(function(err) {
