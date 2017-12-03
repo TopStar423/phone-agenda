@@ -3,7 +3,7 @@
 {
   "development": {
     "username": "root",
-    "password": "password1234",
+    "password": "",
     "database": "podtalk_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
