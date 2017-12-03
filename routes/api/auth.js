@@ -31,7 +31,6 @@ router.post("/signup", function(req, res) {
             "email": "",
             "password": ""
         };
-console.log (err);
         for (var i = 0; i < err.errors.length; i++) {
             if (err.errors[i].type === "unique violation") {
                 switch (err.errors[i].path) {
