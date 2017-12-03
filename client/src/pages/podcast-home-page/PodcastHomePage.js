@@ -5,6 +5,7 @@ import PodcastCard from "../../components/podcast-card/PodcastCard";
 import EpisodeCard from "../../components/episode-card/EpisodeCard";
 import List from "../../components/list/List";
 import Header from './../../components/partials/header/Header';
+import Searchbar from './../../components/search-bar/Searchbar';
 import {Link} from "react-router-dom";
 
 import API from "./../../utils/API";
