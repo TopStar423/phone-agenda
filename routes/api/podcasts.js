@@ -19,7 +19,8 @@ router.get("/comments/:podcastName/:podcastEpisodeName", function (req, res) {
     where: {
       podcastName: req.params.podcastName,
       podcastEpisodeName: req.params.podcastEpisodeName
-    }
+    },
+    order: [['createdAt', 'DESC']]
   }).then(function (comments) {
     res.json(comments);
   })
@@ -30,7 +31,8 @@ router.get("/comments/:userID", isAuthenticated, function (req, res) {
   db.comments.findAll({
     where: {
       userID: req.params.userID
-    }
+    },
+    order: [['createdAt', 'DESC']]
   }).then(function (comments) {
     res.json(comments);
   })
@@ -56,7 +58,8 @@ router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
   db.savedPodcasts.findAll({
     where: {
       userID: req.params.userID
-    }
+    },
+    include: [users]
   }).then(function (savedPodcast) {
     res.json(savedPodcast);
   })
