@@ -153,7 +153,7 @@ class PodcastHomePage extends Component {
             <PodcastCard
               podcast_description={this.state.podcast_description}
               podcast_title={this.props.match.params.id}
-              podcast_url={this.state.podcast_url}
+              // podcast_url={this.state.podcast_url}
               image={this.state.image}
               handleStripHTML={this.handleStripHTML}
             />

@@ -18,17 +18,11 @@ class SignUp extends Component {
     }
   };
 
-
   handleInputChange = event => {
     const {name, value} = event.target;
     this.setState({
       [name]: value
     });
-  };
-
-  onSubmit = event => {
-    event.preventDefault();
-    console.log("hello");
   };
 
   handleFormSubmit = event => {

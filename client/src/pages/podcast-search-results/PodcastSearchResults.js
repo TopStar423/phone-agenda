@@ -53,8 +53,8 @@ class PodcastSearchResults extends Component {
           )}
         </Header>
         <div>
-          {this.state.podcasts.length === 0 ? (
-            <h3><em></em></h3>
+          {!this.state.podcasts.length ? (
+            <h1><em>No results found.</em></h1>
           ) : (
             <div>
               <h1><strong>{this.state.podcasts.length} Results Found for: "{this.state.podcast_title}"</strong></h1>
