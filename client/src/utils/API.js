@@ -27,4 +27,15 @@ export default {
   logout: function () {
     return axios.get("/api/auth/logout");
   }
+=======
+
+  login: function (userLoginData) {
+    return axios.post("/api/auth/login", userLoginData);
+  },
+  signup: function (newUserData) {
+    return axios.post("/api/auth/signup", newUserData);
+  },
+  logout: function () {
+    return axios.get("/api/auth/logout");
+  }
 };
