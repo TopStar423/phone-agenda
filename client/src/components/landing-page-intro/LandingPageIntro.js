@@ -32,14 +32,6 @@ class LandingPageIntro extends Component {
           handleInputChange={this.handleInputChange}
           podcast_title={this.state.podcast_title}
         />
-
-        {this.state.podcasts.length === 0 ? (
-          <h3><em></em></h3>
-        ) : (
-          <div>
-            <PodcastSearchResults/>
-          </div>
-        )}
       </div>
     );
   };

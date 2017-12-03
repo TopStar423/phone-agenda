@@ -13,8 +13,9 @@ const Searchbar = props =>
       className="form-control"
 			id="title"
 			required=""
+			placeholder={props.placeholder}
 		/>
-		<Link to={`/search-results/${props.podcast_title}`}><button type="submit">Submit</button></Link>
+		<Link to={`/search-results/${props.podcast_title}`} onClick={props.onClick}><button type="submit">Submit</button></Link>
 	</div>;
 
 export default Searchbar;

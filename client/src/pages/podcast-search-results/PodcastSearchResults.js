@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import PodcastCard from "../../components/podcast-card/PodcastCard";
 import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
 import List from "../../components/list/List";
 import API from "./../../utils/API";
 import Header from './../../components/partials/header/Header';
+import Searchbar from './../../components/search-bar/Searchbar';
 import {Link} from "react-router-dom";
 import './PodcastSearchResults.css';
 
@@ -13,30 +13,35 @@ class PodcastSearchResults extends Component {
     podcast_feed_url: "",
     podcasts: [],
     userId: ""
-  }
+  };
 
   componentDidMount() {
     this.setState({
       podcast_title: this.props.match.params.id
-    })
+    });
 
-    var replaced = this.props.match.params.id.split(' ').join('+');
+    let replaced = this.props.match.params.id.split(' ').join('+');
     API.searchPodcasts(replaced).then(res => this.setState({
       podcasts: res.data.results
     }))
       .catch(err => console.log(err));
-  }
+  };
+
 
   handleInputChange = event => {
     const {name, value} = event.target;
     this.setState({
       [name]: value
     });
-  };
+  }
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-  };
+  searchAgain() {
+    let replaced = this.props.match.params.id.split(' ').join('+');
+    API.searchPodcasts(replaced).then(res => this.setState({
+      podcasts: res.data.results
+    }))
+      .catch(err => console.log(err));
+  }
 
   render() {
 
@@ -57,6 +62,12 @@ class PodcastSearchResults extends Component {
             <h1><em>No results found.</em></h1>
           ) : (
             <div>
+              <Searchbar
+                handleInputChange={this.handleInputChange}
+                podcast_title={this.state.podcast_title}
+                onClick={this.searchAgain}
+                value={this.state.podcast_title}
+              />
               <h1><strong>{this.state.podcasts.length} Results Found for: "{this.state.podcast_title}"</strong></h1>
               <List>
                 {this.state.podcasts.map((podcast, index) => {
