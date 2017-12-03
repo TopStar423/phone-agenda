@@ -14,10 +14,11 @@ router.get("/users", isAuthenticated, function (req, res) {
 
 
 // //get saved comments for specific podcast
-router.get("/comments/:podcastInfo", function (req, res) {
+router.get("/comments/:podcastName/:podcastEpisodeName", function (req, res) {
   db.comments.findAll({
     where: {
-      podcastInfo: req.params.podcastInfo
+      podcastName: req.params.podcastName,
+      podcaseEpisodeName: req.params.podcastEpisodeName
     }
   }).then(function (comments) {
     res.json(comments);
@@ -30,12 +31,18 @@ router.post("/comment/save", isAuthenticated, function (req, res) {
   db.comments.create(req.body, function (result) {
     console.log(result);
     // res.redirect("/");
-  });
+  }).then(function() {
+      res.json("Comment saved");
+    }
+  )
+    .catch(function(){
+      res.json("Please enter a comment");
+    });
 });
 
 //get saved podcasts for logged in user
 router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
-  db.SavedPodcast.findAll({
+  db.savedPodcasts.findAll({
     where: {
       userID: req.params.userID
     }
@@ -46,10 +53,14 @@ router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
 
 // post route to save podcasts to logged in user's profile
 router.post("/savedPodcast/save/", isAuthenticated, function (req, res) {
-  db.SavedPodcast.create(req.body, function (result) {
-    console.log(result);
-    // res.redirect("/");
-  });
+  db.savedPodcasts.create(req.body, function(result){})
+    .then(function() {
+        res.json("Podcast saved");
+      }
+    )
+    .catch(function(){
+     res.json("Podcast is already saved");
+    });
 });
 
 module.exports = router;
