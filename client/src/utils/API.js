@@ -11,12 +11,19 @@ export default {
     return axios.get("/api/episodes/search/" + searchTerm);
   },
 
+  searchEpisode: function (pod_title, ep_url) {
+    console.log("API: " + ep_url);
+    return axios.get("/api/episodes/search-one/" + pod_title + "/" + ep_url);
+  },
+  
   login: function (userLoginData) {
     return axios.post("/api/auth/login", userLoginData);
   },
+
   signup: function (newUserData) {
     return axios.post("/api/auth/signup", newUserData);
   },
+
   logout: function () {
     return axios.get("/api/auth/logout");
   }
