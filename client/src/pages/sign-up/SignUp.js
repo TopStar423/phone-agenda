@@ -32,20 +32,21 @@ class SignUp extends Component {
       email: this.state.email,
       password: this.state.password
     })
-      .then(res =>
-        this.props.history.push('/home')
-      )
-      .then(res =>
-        this.setState({
-          errors: {
-            username: res.message.username,
-            email: res.message.email,
-            password: res.message.password
-          }
-        })
-      )
-      .catch(err => console.log(err));
-  };
+      .then(res => {
+        console.log(res)
+        if (res.data.message) {
+          this.props.history.push('/home')
+        } else {
+          this.setState({
+            errors: {
+              username: res.data.username,
+              email: res.data.email,
+              password: res.data.password
+            }
+          })
+        }
+      })
+     };
 
   render() {
     return (

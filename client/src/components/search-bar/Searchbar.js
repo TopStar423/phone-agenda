@@ -4,7 +4,7 @@ import Input from "../input/Input";
 
 
 const Searchbar = props =>
-	<div className="searchBar">
+	<div className="searchbar">
 		<Input 
       onChange={props.handleInputChange} 
 			value={props.value}

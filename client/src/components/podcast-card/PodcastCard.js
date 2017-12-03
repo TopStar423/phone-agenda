@@ -8,7 +8,7 @@ const PodcastCard = (props) =>
     <div className="title">
       <PodcastThumbnail image={props.image}/>
       {/*<h3>{props.podcast_title}</h3>*/}
-      <p>{props.podcast_description}</p>
+      <h2>{props.handleStripHTML(props.podcast_description)}</h2>
     </div>
     <div className="link-subscribe">
       <h2><a href={props.podcast_url}>{props.podcast_url}</a></h2>
