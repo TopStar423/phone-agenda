@@ -18,16 +18,26 @@ router.get("/comments/:podcastName/:podcastEpisodeName", function (req, res) {
   db.comments.findAll({
     where: {
       podcastName: req.params.podcastName,
-      podcaseEpisodeName: req.params.podcastEpisodeName
+      podcastEpisodeName: req.params.podcastEpisodeName
     }
   }).then(function (comments) {
     res.json(comments);
   })
 });
 
+//get saved podcasts for logged in user
+router.get("/comments/:userID", isAuthenticated, function (req, res) {
+  db.comments.findAll({
+    where: {
+      userID: req.params.userID
+    }
+  }).then(function (comments) {
+    res.json(comments);
+  })
+});
 
 // // post route to save save comment on current podcast episode page
-router.post("/comment/save", isAuthenticated, function (req, res) {
+router.post("/comments/save", isAuthenticated, function (req, res) {
   db.comments.create(req.body, function (result) {
     console.log(result);
     // res.redirect("/");
@@ -35,8 +45,9 @@ router.post("/comment/save", isAuthenticated, function (req, res) {
       res.json("Comment saved");
     }
   )
-    .catch(function(){
+    .catch(function(err){
       res.json("Please enter a comment");
+      console.log(err);
     });
 });
 

@@ -23,8 +23,20 @@ export default {
   signup: function (newUserData) {
     return axios.post("/api/auth/signup", newUserData);
   },
-  
+
   logout: function () {
     return axios.get("/api/auth/logout");
+  },
+
+  saveComment: function(newComment){
+    return axios.post("/api/comments/save", newComment);
+  },
+
+  getEpisodeComments: function(pod_name, pod_ep_name){
+    return axios.get("/api/comments/" + pod_name + "/" + pod_ep_name);
+  },
+
+  getUserComments: function(userId){
+    return axios.get("/api/comments/" + userId);
   }
 };
