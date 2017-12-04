@@ -13,11 +13,20 @@ import API from "./../../utils/API";
 class UserHomePage extends Component {
   state = {
     podcasts: [],
-    episode_comments: []
+    episode_comments: [],
+    user_data: {}
   };
 
   componentDidMount() {
     this.getEpisodeComments();
+
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data
+      })
+    )
+     .catch(err => console.log(err));
+
   }
 
   getEpisodeComments = () => {

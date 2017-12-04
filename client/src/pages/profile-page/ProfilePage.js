@@ -13,12 +13,21 @@ import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnai
 class ProfilePage extends Component {
   state = {
     podcasts: [],
-    user_comments: []
+    user_comments: [],
+    user_data: {}
   };
 
   componentDidMount() {
     this.getUserPodcasts();
     this.getUserComments();
+
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data
+      })
+    )
+     .catch(err => console.log(err));
+
   }
 
   getUserComments = () => { // userID #1 in this example

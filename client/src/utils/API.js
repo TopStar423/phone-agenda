@@ -39,5 +39,9 @@ export default {
 
   getUserPodcasts: function(userId){
     return axios.get("/api/savedPodcast/" + userId);
+  },
+
+  getUserData: function(){
+    return axios.get("/api/auth/user_data");
   }
 };
