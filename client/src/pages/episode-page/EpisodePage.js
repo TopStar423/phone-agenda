@@ -70,12 +70,16 @@ class EpisodePage extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    var temp = decodeURIComponent(this.props.match.params.ep_id);
+
     API.saveComment({
       comment: this.state.comment,
       podcastName: this.props.match.params.pod_id,
-      podcastEpisodeName: this.props.match.params.ep_id,
+      podcastEpisodeName: temp,
       userId: 1
-    }).then(this.getEpisodeComments());
+    });
+
+    this.getEpisodeComments();
   }
 
   handleInputChange = event =>{
@@ -86,7 +90,6 @@ class EpisodePage extends Component {
   }
 
   render() {
-    console.log(this.props.match.params);
     return (
       <div className="episode-wrapper">
         <Header>
@@ -132,5 +135,4 @@ class EpisodePage extends Component {
   }
 }
 
-
-        export default EpisodePage;
+export default EpisodePage;

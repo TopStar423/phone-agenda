@@ -71,12 +71,12 @@ router.get('/logout', function(req, res) {
 router.get("/user_data", function(req, res) {
     if (!req.user) {
         // The user is not logged in, send back an empty object
-        utils.respond(401, null, res)
+        utils.respond(401, null, null, res)
     } else {
         // Otherwise send back the user's email and id
         // Sending back a password, even a hashed password, isn't a good idea
-        utils.respond(200, {
-            email: req.user.email,
+        utils.respond(200, null, {
+            username: req.user.username,
             id: req.user.id,
         }, res);
     }
