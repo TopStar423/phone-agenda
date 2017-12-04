@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import API from "./../../utils/API";
-import List from "../list/List";
-import PodcastThumbnail from "../podcast-thumbnail/PodcastThumbnail";
-import PodcastSearchResults from "../../pages/podcast-search-results/PodcastSearchResults"
 import Searchbar from "../search-bar/Searchbar";
 import "./LandingPageIntro.css";
+import {withRouter} from "react-router-dom";
+
 
 
 class LandingPageIntro extends Component {
@@ -19,10 +17,14 @@ class LandingPageIntro extends Component {
     this.setState({
       [name]: value
     });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.props.history.push('/search-results/' + this.state.podcast_title);
   }
 
   render() {
-    //console.log(this.state.podcasts.length);
     return (
       <div className="landingIntro">
         <h1>podtalk</h1>
@@ -30,11 +32,14 @@ class LandingPageIntro extends Component {
         <h3><em>Find a Podcast</em></h3>
         <Searchbar
           handleInputChange={this.handleInputChange}
+          value={this.state.podcast_title}
           podcast_title={this.state.podcast_title}
+          disabled={!this.state.podcast_title}
+          submit={this.handleFormSubmit}
         />
       </div>
     );
   };
 }
 
-export default LandingPageIntro;
+export default withRouter(LandingPageIntro);

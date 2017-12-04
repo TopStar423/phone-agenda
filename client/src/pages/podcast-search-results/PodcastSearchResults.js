@@ -15,11 +15,11 @@ class PodcastSearchResults extends Component {
     userId: ""
   };
 
+
   componentDidMount() {
     this.setState({
       podcast_title: this.props.match.params.id
     });
-
     let replaced = this.props.match.params.id.split(' ').join('+');
     API.searchPodcasts(replaced).then(res => this.setState({
       podcasts: res.data.results
@@ -35,16 +35,21 @@ class PodcastSearchResults extends Component {
     });
   }
 
-  searchAgain() {
-    let replaced = this.props.match.params.id.split(' ').join('+');
-    API.searchPodcasts(replaced).then(res => this.setState({
-      podcasts: res.data.results
-    }))
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.props.history.replace('/search-results/' + this.state.podcast_title);
+    let replaced = this.state.podcast_title.split(' ').join('+');
+    API.searchPodcasts(replaced).then(res => {
+      this.setState({
+        podcasts: res.data.results
+      });
+    })
       .catch(err => console.log(err));
-  }
+  };
+
 
   render() {
-
     return (
       <div className="search-results-wrapper">
         <Header>
@@ -57,17 +62,18 @@ class PodcastSearchResults extends Component {
             <Link to="/">Log Out</Link>
           )}
         </Header>
+        <Searchbar
+          handleInputChange={this.handleInputChange}
+          podcast_title={this.state.podcast_title}
+          value={this.state.podcast_title}
+          disabled={!this.state.podcast_title}
+          submit={this.handleFormSubmit}
+        />
         <div>
           {!this.state.podcasts.length ? (
             <h1><em>No results found.</em></h1>
           ) : (
             <div>
-              <Searchbar
-                handleInputChange={this.handleInputChange}
-                podcast_title={this.state.podcast_title}
-                onClick={this.searchAgain}
-                value={this.state.podcast_title}
-              />
               <h1><strong>{this.state.podcasts.length} Results Found for: "{this.state.podcast_title}"</strong></h1>
               <List>
                 {this.state.podcasts.map((podcast, index) => {
