@@ -8,20 +8,22 @@ import './UserHomePage.css'
 import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
 import API from "./../../utils/API";
 
+
+// user-home-page == all the stuff a user follows
 class UserHomePage extends Component {
   state = {
     podcasts: [],
-    user_comments: []
+    episode_comments: []
   };
 
   componentDidMount() {
-    this.getUserComments();
+    this.getEpisodeComments();
   }
 
-  getUserComments = () => {
-    API.getUserComments(1).then(res =>
+  getEpisodeComments = () => {
+    API.getEpisodeComments(1).then(res =>
       this.setState({
-        user_comments: res.data
+        episode_comments: res.data
       })
     )
       .catch(err => console.log(err));
@@ -60,7 +62,7 @@ class UserHomePage extends Component {
             <h1>Latest Comments</h1>
               <div>
                 <List>
-                  {this.state.user_comments.map(comment => {
+                  {this.state.episode_comments.map(comment => {
                     return (
                       <CommentCard
                         key={comment.id}
