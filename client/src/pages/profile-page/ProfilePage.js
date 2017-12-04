@@ -12,26 +12,24 @@ import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnai
 // user profile page == all the comments they made
 class ProfilePage extends Component {
   state = {
-    podcasts: [],
+    user_podcasts: [],
     user_comments: [],
     user_data: {}
   };
 
   componentDidMount() {
-    this.getUserPodcasts();
-    this.getUserComments();
-
     API.getUserData().then(res =>
       this.setState({
-        user_data: res.data
-      })
-    )
+        user_data: res.data.data
+      }, () => {
+        this.getUserPodcasts();
+        this.getUserComments();
+      }))
      .catch(err => console.log(err));
-
   }
 
-  getUserComments = () => { // userID #1 in this example
-    API.getUserComments(1).then(res =>
+  getUserComments = () => { 
+    API.getUserComments(this.state.user_data.id).then(res =>
       this.setState({
         user_comments: res.data
       })
@@ -39,8 +37,8 @@ class ProfilePage extends Component {
       .catch(err => console.log(err));
   }
 
-  getUserPodcasts = () => { // userID #1 in this example
-    API.getUserPodcasts(1).then(res =>
+  getUserPodcasts = () => { 
+    API.getUserPodcasts(this.state.user_data.id).then(res =>
       this.setState({
         user_podcasts: res.data
       })
@@ -49,6 +47,7 @@ class ProfilePage extends Component {
   }
 
   render() {
+    console.log(this.state.user_data.id);
     return (
       <div className="home-wrapper">
         <Header>
@@ -57,7 +56,7 @@ class ProfilePage extends Component {
         <div className="home-main">
           <div className="sidebar">
             <h1>Your Podcasts</h1>
-            {!this.state.podcasts.length ? (
+            {this.state.user_podcasts.length == 0 ? (
               <div>
                 <h3><em>No podcasts to display.</em></h3>
               </div>
@@ -78,6 +77,11 @@ class ProfilePage extends Component {
           </div>
           <div className="feed">
             <h1>Latest Comments:</h1>
+              {this.state.user_comments.length == 0 ? (
+                <div>
+                  <h3><em>No comments to display.</em></h3>
+                </div>
+              ) : (
               <div>
                 <List>
                   {this.state.user_comments.map(comment => {
@@ -86,11 +90,13 @@ class ProfilePage extends Component {
                         key={comment.id}
                         comment_timestamp={comment.createdAt}
                         message={comment.comment}
+                        username={comment.username}
                       />
                     );
                   })}
                 </List>
               </div>
+            )}
           </div>
         </div>
       </div>

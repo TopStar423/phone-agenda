@@ -26,7 +26,13 @@ class EpisodePage extends Component {
     }))
       .catch(err => console.log(err));
 
-    this.getEpisodeComments();
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data.data
+      }, () => {
+        this.getEpisodeComments();
+      }))
+     .catch(err => console.log(err));
   }
 
   getEpisodeComments = () => {
@@ -124,6 +130,7 @@ class EpisodePage extends Component {
                       key={comment.id}
                       comment_timestamp={comment.createdAt}
                       message={comment.comment}
+                      username={comment.username}
                     />
                   );
                 })}

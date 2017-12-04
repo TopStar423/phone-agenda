@@ -18,26 +18,32 @@ class UserHomePage extends Component {
   };
 
   componentDidMount() {
-    this.getEpisodeComments();
-
     API.getUserData().then(res =>
       this.setState({
-        user_data: res.data
+        user_data: res.data.data
       })
     )
      .catch(err => console.log(err));
 
   }
 
+  getUserPodcasts = () => { 
+    API.getUserPodcasts(this.state.user_data.id).then(res =>
+      this.setState({
+        user_podcasts: res.data
+      })
+    )
+      .catch(err => console.log(err));
+  }
+
   getEpisodeComments = () => {
-    API.getEpisodeComments(1).then(res =>
+    API.getEpisodeComments(this.state.user_data.id).then(res =>
       this.setState({
         episode_comments: res.data
       })
     )
       .catch(err => console.log(err));
   }
-
 
   render() {
     return (
@@ -48,7 +54,7 @@ class UserHomePage extends Component {
         <div className="home-main">
           <div className="sidebar">
             <h1>Your Podcasts</h1>
-            {!this.state.podcasts.length ? (
+            {this.state.podcasts.length == 0 ? (
               <div>
                 <h3><em>No podcasts to display.</em></h3>
               </div>
@@ -69,6 +75,11 @@ class UserHomePage extends Component {
           </div>
           <div className="feed">
             <h1>Latest Comments</h1>
+             {this.state.episode_comments.length == 0 ? (
+                <div>
+                  <h3><em>No comments to display.</em></h3>
+                </div>
+              ) : (
               <div>
                 <List>
                   {this.state.episode_comments.map(comment => {
@@ -77,11 +88,13 @@ class UserHomePage extends Component {
                         key={comment.id}
                         comment_timestamp={comment.createdAt}
                         message={comment.comment}
+                        username={comment.username}
                       />
                     );
                   })}
                 </List>
               </div>
+            )}
           </div>
         </div>
       </div>
