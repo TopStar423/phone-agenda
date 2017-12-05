@@ -62,7 +62,7 @@ class ProfilePage extends Component {
               </div>
             ) : (
               <div>
-                <List length={this.state.podcasts.length}>
+                <List>
                   {this.state.podcasts.map(podcast => {
                     return (
                       <PodcastThumbnail
