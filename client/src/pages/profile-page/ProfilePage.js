@@ -17,27 +17,23 @@ class ProfilePage extends Component {
     user_data: {}
   };
 
-  componentDidMount() {
+  componentWillMount() {
     API.getUserData().then(res =>
       this.setState({
         user_data: res.data.data
-      }, () => {
-        this.getUserPodcasts();
-        this.getUserComments();
-      }))
+      }, () => this.getUserStuff())
+      )
      .catch(err => console.log(err));
   }
 
-  getUserComments = () => { 
+  getUserStuff = () => {
     API.getUserComments(this.state.user_data.id).then(res =>
       this.setState({
         user_comments: res.data
       })
     )
       .catch(err => console.log(err));
-  }
 
-  getUserPodcasts = () => { 
     API.getUserPodcasts(this.state.user_data.id).then(res =>
       this.setState({
         user_podcasts: res.data
@@ -47,7 +43,6 @@ class ProfilePage extends Component {
   }
 
   render() {
-    console.log(this.state.user_data.id);
     return (
       <div className="home-wrapper">
         <Header>
@@ -63,11 +58,12 @@ class ProfilePage extends Component {
             ) : (
               <div>
                 <List>
-                  {this.state.podcasts.map(podcast => {
+                  {this.state.user_podcasts.map((podcast, index) => {
                     return (
                       <PodcastThumbnail
-                        image={this.state.podcast.image}
-                        podcast_title={this.state.podcast.title}
+                        key={index}
+                        image={podcast.imageUrl}
+                        podcast_title={podcast.podcastName}
                       />
                     );
                   })}

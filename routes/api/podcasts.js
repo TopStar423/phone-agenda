@@ -68,11 +68,11 @@ router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
 router.post("/savedPodcast/save/", isAuthenticated, function (req, res) {
   db.savedPodcasts.create(req.body, function(result){})
     .then(function() {
-        res.json("Podcast saved");
+        res.json("Podcast saved.");
       }
     )
     .catch(function(){
-     res.json("Podcast is already saved");
+     res.json("Podcast is already saved.");
     });
 });
 

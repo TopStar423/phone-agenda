@@ -15,7 +15,8 @@ class EpisodePage extends Component {
   state = {
     episode: {},
     podcast_title: "",
-    episode_comments: []
+    episode_comments: [],
+    user_data: {}
   }
 
   componentDidMount() {
@@ -82,7 +83,8 @@ class EpisodePage extends Component {
       comment: this.state.comment,
       podcastName: this.props.match.params.pod_id,
       podcastEpisodeName: temp,
-      userId: 1
+      userId: this.state.user_data.id,
+      username: this.state.user_data.username
     });
 
     this.getEpisodeComments();
