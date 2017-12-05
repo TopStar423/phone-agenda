@@ -59,7 +59,6 @@ router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
     where: {
       userID: req.params.userID
     },
-    include: [users]
   }).then(function (savedPodcast) {
     res.json(savedPodcast);
   })
