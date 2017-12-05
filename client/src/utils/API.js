@@ -29,6 +29,10 @@ export default {
     return axios.post("/api/comments/save", newComment);
   },
 
+  savePodcast: function(newPodcast){
+    return axios.post("/api/savedPodcast/save/", newPodcast);
+  },
+
   getEpisodeComments: function(pod_name, pod_ep_name){
     return axios.get("/api/comments/" + pod_name + "/" + pod_ep_name);
   },
@@ -39,5 +43,9 @@ export default {
 
   getUserPodcasts: function(userId){
     return axios.get("/api/savedPodcast/" + userId);
+  },
+
+  getUserData: function(){
+    return axios.get("/api/auth/user_data");
   }
 };

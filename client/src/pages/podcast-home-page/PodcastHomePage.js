@@ -21,10 +21,17 @@ class PodcastHomePage extends Component {
     image: "",
     episodes: [],
     episode_title: "",
-    userId: ""
+    user_data: {}
   }
 
   componentDidMount() {
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data.data
+      })
+    )
+     .catch(err => console.log(err));
+
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
 
@@ -64,21 +71,15 @@ class PodcastHomePage extends Component {
     });
   }
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.episodeSearch();
+  }
+
   handleStripHTML = (description) => {
     var stripped = description.replace(/<[^>]+>/g, '');
     var decoded = he.decode(stripped)
     return decoded;
-  }
-
-  listEpisodes = () => {
-    for (var i = 0; i < this.state.episodes.length; i++) {
-      console.log(this.state.episodes[i]);
-    }
-  }
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    this.episodeSearch();
   }
 
   episodeSearch = (title) => {
@@ -130,9 +131,13 @@ class PodcastHomePage extends Component {
     });    
   }
 
-  encodeUrl = (url) =>{
-    var result = encodeURIComponent(url);
-    return result;
+  subscribe = () => {
+    API.savePodcast({
+      imageUrl: this.state.image,
+      podcastName: this.state.podcast_title,
+      userId: this.state.user_data.id
+    })
+     .catch(err => console.log(err));
   }
 
   render() {
@@ -156,6 +161,7 @@ class PodcastHomePage extends Component {
               // podcast_url={this.state.podcast_url}
               image={this.state.image}
               handleStripHTML={this.handleStripHTML}
+              subscribe={this.subscribe}
             />
           </div>
 

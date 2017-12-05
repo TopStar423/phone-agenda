@@ -15,7 +15,8 @@ class EpisodePage extends Component {
   state = {
     episode: {},
     podcast_title: "",
-    episode_comments: []
+    episode_comments: [],
+    user_data: {}
   }
 
   componentDidMount() {
@@ -26,7 +27,13 @@ class EpisodePage extends Component {
     }))
       .catch(err => console.log(err));
 
-    this.getEpisodeComments();
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data.data
+      }, () => {
+        this.getEpisodeComments();
+      }))
+     .catch(err => console.log(err));
   }
 
   getEpisodeComments = () => {
@@ -76,7 +83,8 @@ class EpisodePage extends Component {
       comment: this.state.comment,
       podcastName: this.props.match.params.pod_id,
       podcastEpisodeName: temp,
-      userId: 1
+      userId: this.state.user_data.id,
+      username: this.state.user_data.username
     });
 
     this.getEpisodeComments();
@@ -124,6 +132,7 @@ class EpisodePage extends Component {
                       key={comment.id}
                       comment_timestamp={comment.createdAt}
                       message={comment.comment}
+                      username={comment.username}
                     />
                   );
                 })}
