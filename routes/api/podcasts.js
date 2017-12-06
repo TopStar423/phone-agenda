@@ -26,8 +26,20 @@ router.get("/comments/:podcastName/:podcastEpisodeName", function (req, res) {
   })
 });
 
+//get saved comments for all podcasts - to be used to retrieve comments for users subscribed podcasts
+router.get("/comments/:podcastName", function (req, res) {
+  db.comments.findAll({
+    where: {
+      podcastName: req.params.podcastName,
+    },
+    order: [['createdAt', 'DESC']]
+  }).then(function (comments) {
+    res.json(comments);
+  })
+});
+
 //get saved podcasts for logged in user
-router.get("/comments/:userID", isAuthenticated, function (req, res) {
+router.get("/userComments/:userID", isAuthenticated, function (req, res) {
   db.comments.findAll({
     where: {
       userID: req.params.userID

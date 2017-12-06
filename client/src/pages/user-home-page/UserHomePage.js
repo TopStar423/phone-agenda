@@ -13,7 +13,7 @@ import API from "./../../utils/API";
 class UserHomePage extends Component {
   state = {
     user_podcasts: [],
-    episode_comments: [],
+    podcast_comments: [],
     user_data: {}
   };
 
@@ -30,21 +30,31 @@ class UserHomePage extends Component {
     API.getUserPodcasts(this.state.user_data.id).then(res =>
       this.setState({
         user_podcasts: res.data
-      }, () => this.getEpisodeComments())
+      }, () => this.getSavedPodcastComments())
     )
       .catch(err => console.log(err));
   }
 
-  getEpisodeComments(){
-    API.getEpisodeComments(this.state.user_data.id).then(res =>
-      this.setState({
-        episode_comments: res.data
+  getSavedPodcastComments(){
+    for (let i = 0; i < this.state.user_podcasts.length; i++ ){
+      let podcastName = this.state.user_podcasts[i].podcastName;
+      API.getSavedPodcastComments(podcastName).then(commentArray => {
+        for(let j = 0; j < commentArray.data.length; j++){
+          if (commentArray.data[j]){
+            console.log(commentArray);
+            this.setState({
+              podcast_comments: this.state.podcast_comments.concat(commentArray.data[j])
+
+            })
+          }
+
+        }
       })
-    )
-      .catch(err => console.log(err));
-  }
+    }
+}
 
   render() {
+    console.log(this.state.podcast_comments);
     return (
       <div className="home-wrapper">
         <Header>
@@ -75,20 +85,22 @@ class UserHomePage extends Component {
           </div>
           <div className="feed">
             <h1>Latest Comments: </h1>
-             {this.state.episode_comments.length == 0 ? (
+             {this.state.podcast_comments.length == 0 ? (
                 <div>
                   <h3><em>No comments to display.</em></h3>
                 </div>
               ) : (
               <div>
                 <List>
-                  {this.state.episode_comments.map(comment => {
+                  {this.state.podcast_comments.map((comment, index) => {
                     return (
                       <CommentCard
-                        key={comment.id}
+                        key={index}
                         comment_timestamp={comment.createdAt}
                         message={comment.comment}
                         username={comment.username}
+                        podcast_title={comment.podcastName}
+                        episode_title={comment.podcastEpisodeName}
                       />
                     );
                   })}

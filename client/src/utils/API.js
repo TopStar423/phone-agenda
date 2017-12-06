@@ -38,7 +38,7 @@ export default {
   },
 
   getUserComments: function(userId){
-    return axios.get("/api/comments/" + userId);
+    return axios.get("/api/userComments/" + userId);
   }, 
 
   getUserPodcasts: function(userId){
@@ -47,5 +47,9 @@ export default {
 
   getUserData: function(){
     return axios.get("/api/auth/user_data");
+  },
+
+  getSavedPodcastComments: function(pod_name){
+    return axios.get("/api/comments/" + pod_name);
   }
 };
