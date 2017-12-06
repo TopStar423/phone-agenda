@@ -43,12 +43,20 @@ class ProfilePage extends Component {
     console.log("hello");
   }
 
+  logout(){
+    API.logout().then(
+      this.setState({
+        user_data: {}
+      })
+    );
+  }
+
   render() {
     console.log(this.state.user_comments);
     return (
       <div className="home-wrapper">
         <Header>
-          <Link to="/">Log Out</Link>
+          <Link to="/" onclick={this.logout}>Log Out</Link>
         </Header>
         <div className="home-main">
           <div className="sidebar">

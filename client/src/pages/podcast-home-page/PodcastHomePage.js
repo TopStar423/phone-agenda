@@ -31,6 +31,7 @@ class PodcastHomePage extends Component {
       })
     )
      .catch(err => console.log(err));
+  console.log(this.state.user_data);
 
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
@@ -140,17 +141,25 @@ class PodcastHomePage extends Component {
      .catch(err => console.log(err));
   }
 
+  logout(){
+    API.logout().then(
+      this.setState({
+        user_data: {}
+      })
+    );
+  }
+
   render() {
     return (
       <div className="podcast-homepage-wrapper">
         <Header>
-          {!this.state.userId ? (
+          {this.state.user_data.length === 0 ? (
             <div>
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
           ) : (
-            <Link to="/">Log Out</Link>
+            <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <div>

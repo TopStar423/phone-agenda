@@ -4,6 +4,8 @@ import Input from "../../components/input/Input";
 import Header from "../../components/partials/header/Header";
 import {Link} from "react-router-dom";
 import "./AccountSettings.css";
+import API from "./../../utils/API";
+
 
 class AccountSettings extends Component {
   state = {
@@ -23,12 +25,19 @@ class AccountSettings extends Component {
     event.preventDefault();
   };
 
+  logout(){
+    API.logout().then(
+    console.log('logged out')
+    );
+  }
+
+
   render() {
 
     return (
       <div className="account-settings-wrapper">
         <Header>
-          <Link to="/">Log Out</Link>
+          <Link to="/" onClick={this.logout}>Log Out</Link>
         </Header>
         <div className="accountSettings">
           <form>

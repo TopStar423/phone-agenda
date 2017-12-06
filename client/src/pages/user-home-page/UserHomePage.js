@@ -53,12 +53,20 @@ class UserHomePage extends Component {
     }
 }
 
+  logout(){
+    API.logout().then(
+      this.setState({
+        userId: ""
+      })
+    );
+  }
+
   render() {
     console.log(this.state.podcast_comments);
     return (
       <div className="home-wrapper">
         <Header>
-          <Link to="/">Log Out</Link>
+          <Link to="/" onClick={this.logout}>Log Out</Link>
         </Header>
         <div className="home-main">
           <div className="sidebar">
