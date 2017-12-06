@@ -13,7 +13,6 @@ const EpisodeCard = (props) => (
     <h2>{props.episode_release_date}</h2>
     
     <a href={props.url}><Button label="Play Episode" /></a>
-    <Button className="episodeButton" label="Comments" />
   </div>
 );
 
