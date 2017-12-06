@@ -17,7 +17,8 @@ class EpisodePage extends Component {
   state = {
     episode: {},
     podcast_title: "",
-    episode_comments: []
+    episode_comments: [],
+    userId: ""
   }
 
   componentDidMount() {
@@ -62,6 +63,7 @@ class EpisodePage extends Component {
 
   render() {
     console.log(this.props.match.params);
+    console.log("state", this.state.episode)
     return (
       <div className="episode-wrapper">
         <Header>
@@ -82,6 +84,7 @@ class EpisodePage extends Component {
             episode_title={this.state.episode.title}
             episode_description={this.state.episode.description}
             episode_release_date={this.state.episode.released}
+            url={this.state.episode.url}
             handleStripHTML={this.handleStripHTML}
           />
 

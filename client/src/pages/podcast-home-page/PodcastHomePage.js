@@ -53,7 +53,6 @@ class PodcastHomePage extends Component {
         image: res.data.artworkUrl,
         episodes: episodesArr
       })
-
     }).catch(err => console.log(err));
   }
 
