@@ -73,7 +73,9 @@ class PodcastHomePage extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    this.episodeSearch();
+    if(this.state.episode_title !== ""){
+      this.episodeSearch();
+    }
   }
 
   handleStripHTML = (description) => {
@@ -83,35 +85,38 @@ class PodcastHomePage extends Component {
   }
 
   episodeSearch = (title) => {
-    var tempArr = [];
-    var resultsArr = [];
+    if(title !== null){
+      var tempArr = [];
+      var resultsArr = [];
 
-    // convert search term(s) into array of words
-    var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
-      return word.toLowerCase();
-    });
-
-    // now, go through the episodes array, all the titles
-    for(var i = 0; i < this.state.episodes.length; i++){
-      tempArr[i] = -1;
-      resultsArr[i] = -1;
-      
-      // convert all the episode titles into another array of words
-      var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
+      // convert search term(s) into array of words
+      var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
         return word.toLowerCase();
       });
 
-      // now, record all the matches
-      for(var j = 0; j < titleArr.length; j++){
-        for(var k = 0; k < epTitleArr.length; k++){
-          if(titleArr[j] === epTitleArr[k]){
-            tempArr[i]++; 
-            // tempArr records all the scores in each index
+      // now, go through the episodes array, all the titles
+      for(var i = 0; i < this.state.episodes.length; i++){
+        tempArr[i] = -1;
+        resultsArr[i] = -1;
+        
+        // convert all the episode titles into another array of words
+        var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
+          return word.toLowerCase();
+        });
 
-            resultsArr[i] = this.state.episodes[i];
+        // now, record all the matches
+        for(var j = 0; j < titleArr.length; j++){
+          for(var k = 0; k < epTitleArr.length; k++){
+            if(titleArr[j] === epTitleArr[k]){
+              tempArr[i]++; 
+              // tempArr records all the scores in each index
+
+              resultsArr[i] = this.state.episodes[i];
+            }
           }
         }
       }
+
     }
 
     //tempArr.sort(function(a, b){return b-a})
@@ -164,23 +169,21 @@ class PodcastHomePage extends Component {
               subscribe={this.subscribe}
             />
           </div>
-
+          <div className="episode-searchbar">
+            <h2>Find an episode:</h2>
+            <EpisodeSearchbar
+              handleInputChange={this.handleInputChange}
+              podcast_title={this.state.podcast_title}
+              handleFormSubmit={this.handleFormSubmit}
+              query={this.state.episode_title}
+            />
+          </div>
           {this.state.episodes.length === 0 ? (
             <h3><em>No episodes found.</em></h3>
           ) : (
             <div className="results-box">
               <div className="title-search">
                 <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
-                <div className="episode-search">
-                  <h2>Find an episode:</h2>
-                  <EpisodeSearchbar
-                    handleInputChange={this.handleInputChange}
-                    podcast_title={this.state.podcast_title}
-                    handleFormSubmit={this.handleFormSubmit}
-                    query={this.state.episode_title}
-                  />
-                </div>
-
               </div>
               <List>
                 {this.state.episodes.map((episode, index) => {

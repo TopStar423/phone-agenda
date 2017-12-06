@@ -14,14 +14,20 @@ import "./EpisodePage.css";
 class EpisodePage extends Component {
   state = {
     episode: {},
+    mp3_enclosure: "",
+    mp3_media_content: "",
     podcast_title: "",
     episode_comments: [],
     user_data: {}
   }
 
   componentDidMount() {
+    let mp3 = "";
+    let episode = {};
+
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
     API.searchEpisode(replaced, this.props.match.params.ep_url).then(res => this.setState({
+      mp3: res.data.rss.enclosures[0].url !== undefined ? res.data.rss.enclosures[0].url :res.data.rss.media.content[0].url,
       episode: res.data.rss,
       podcast_title: replaced
     }))
@@ -118,6 +124,7 @@ class EpisodePage extends Component {
             episode_description={this.state.episode.description}
             episode_release_date={this.state.episode.released}
             handleStripHTML={this.handleStripHTML}
+            url={this.state.mp3}
           />
             <div>
               <AddComment

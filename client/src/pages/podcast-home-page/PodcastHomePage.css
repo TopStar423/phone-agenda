@@ -55,3 +55,9 @@
 .results-box .title-search .searchBar button {
   padding: 5px 10px;
 }
+
+.episode-searchbar{
+  margin-top: 20px;
+  margin-left: 70%;
+  margin-bottom: none;
+}
