@@ -3,6 +3,7 @@ import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import Header from "../../components/partials/header/Header";
 import {Link} from "react-router-dom";
+import FullSearchBar from "../../components/search-bar/FullSearchBar";
 import "./AccountSettings.css";
 
 class AccountSettings extends Component {
@@ -28,6 +29,7 @@ class AccountSettings extends Component {
     return (
       <div className="account-settings-wrapper">
         <Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
           <Link to="/">Log Out</Link>
         </Header>
         <div className="accountSettings">

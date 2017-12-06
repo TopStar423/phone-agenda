@@ -4,6 +4,8 @@ import Input from "../../components/input/Input";
 import Header from "../../components/partials/header/Header"
 import "./LogIn.css";
 import API from "../../utils/API.js";
+import FullSearchBar from "../../components/search-bar/FullSearchBar";
+
 
 class Login extends Component {
   state = {
@@ -27,12 +29,12 @@ class Login extends Component {
     })
       .then(res => {
         if (res.status < 400) {
-            this.props.history.push('/home');
+          this.props.history.push('/home');
         }
       })
       .catch(err => {
-        if(!err) return;
-        if(err.response.status >= 500) {
+        if (!err) return;
+        if (err.response.status >= 500) {
           console.error(err);
         } else {
           console.log(err.response.data.statusCat);
@@ -46,7 +48,9 @@ class Login extends Component {
   render() {
     return (
       <div className="log-in-wrapper">
-        <Header/>
+        <Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+        </Header>
         <div className="log-in">
           <form>
             <h2>Log In</h2>

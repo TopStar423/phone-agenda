@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import Input from "../input/Input";
 
 
-const Searchbar = props =>
+const ResultsPageSearchbar = props =>
   <form className="searchbar" onSubmit={props.submit}>
     <Input
       onChange={props.handleInputChange}
@@ -20,4 +20,4 @@ const Searchbar = props =>
     {/*</Link>*/}
   </form>;
 
-export default Searchbar;
+export default ResultsPageSearchbar;

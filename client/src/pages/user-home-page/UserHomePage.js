@@ -6,6 +6,8 @@ import Header from "../../components/partials/header/Header";
 import {Link} from "react-router-dom";
 import './UserHomePage.css'
 import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
+import FullSearchBar from "../../components/search-bar/FullSearchBar";
+
 
 class UserHomePage extends Component {
   state = {
@@ -18,6 +20,7 @@ class UserHomePage extends Component {
     return (
       <div className="home-wrapper">
         <Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
           <Link to="/">Log Out</Link>
         </Header>
         <div className="home-main">

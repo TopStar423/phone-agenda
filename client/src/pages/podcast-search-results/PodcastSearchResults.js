@@ -3,9 +3,10 @@ import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnai
 import List from "../../components/list/List";
 import API from "./../../utils/API";
 import Header from './../../components/partials/header/Header';
-import Searchbar from './../../components/search-bar/Searchbar';
+import ResultsPageSearchbar from '../../components/search-bar/ResultsPageSearchbar';
 import {Link} from "react-router-dom";
 import './PodcastSearchResults.css';
+
 
 class PodcastSearchResults extends Component {
   state = {
@@ -54,7 +55,7 @@ class PodcastSearchResults extends Component {
       <div className="search-results-wrapper">
         <Header>
           {!this.state.userId ? (
-            <div>
+            <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
@@ -62,7 +63,7 @@ class PodcastSearchResults extends Component {
             <Link to="/">Log Out</Link>
           )}
         </Header>
-        <Searchbar
+        <ResultsPageSearchbar
           handleInputChange={this.handleInputChange}
           podcast_title={this.state.podcast_title}
           value={this.state.podcast_title}
