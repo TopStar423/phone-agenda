@@ -89,17 +89,15 @@ class PodcastHomePage extends Component {
       var tempArr = [];
       var resultsArr = [];
 
-      // convert search term(s) into array of words
       var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
         return word.toLowerCase();
       });
 
-      // now, go through the episodes array, all the titles
+
       for(var i = 0; i < this.state.episodes.length; i++){
         tempArr[i] = -1;
         resultsArr[i] = -1;
-        
-        // convert all the episode titles into another array of words
+
         var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
           return word.toLowerCase();
         });
@@ -205,7 +203,6 @@ class PodcastHomePage extends Component {
                       episode_url={episode.url}
                       url={episode.mp3}
                       handleStripHTML={this.handleStripHTML}
-                      encodeUrl={this.encodeUrl}
                     />
                   );
                 })}

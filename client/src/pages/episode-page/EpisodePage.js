@@ -26,7 +26,7 @@ class EpisodePage extends Component {
     let episode = {};
 
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
-    API.searchEpisode(replaced, this.props.match.params.ep_url).then(res => this.setState({
+    API.searchEpisode(replaced, this.props.match.params.ep_id).then(res => this.setState({
       mp3: res.data.rss.enclosures[0].url !== undefined ? res.data.rss.enclosures[0].url :res.data.rss.media.content[0].url,
       episode: res.data.rss,
       podcast_title: replaced
