@@ -5,7 +5,7 @@ import "./EpisodeCard.css";
 
 const EpisodeCard = (props) => (
   <div className="episode-card-box"> 
-    	<Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_url)}/${encodeURIComponent(props.episode_title)}`}>
+    	<Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_title)}`}>
       <h2>{props.episode_title}</h2>
     </Link>
     

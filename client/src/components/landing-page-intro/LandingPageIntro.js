@@ -22,7 +22,6 @@ class LandingPageIntro extends Component {
   }
 
   render() {
-    //console.log(this.state.podcasts.length);
     return (
       <div className="landingIntro">
         <h1>podtalk</h1>

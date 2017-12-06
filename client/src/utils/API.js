@@ -9,8 +9,8 @@ export default {
     return axios.get("/api/episodes/search/" + searchTerm);
   },
 
-  searchEpisode: function (pod_title, ep_url) {
-    return axios.get("/api/episodes/search-one/" + pod_title + "/" + ep_url);
+  searchEpisode: function (pod_title, ep_title) {
+    return axios.get("/api/episodes/search-one/" + pod_title + "/" + ep_title);
   },
 
   login: function (userLoginData) {
