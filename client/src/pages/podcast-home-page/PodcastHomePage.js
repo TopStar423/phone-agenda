@@ -31,7 +31,6 @@ class PodcastHomePage extends Component {
       })
     )
      .catch(err => console.log(err));
-  console.log(this.state.user_data);
 
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
