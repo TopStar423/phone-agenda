@@ -40,9 +40,11 @@ class ProfilePage extends Component {
       })
     )
       .catch(err => console.log(err));
+    console.log("hello");
   }
 
   render() {
+    console.log(this.state.user_comments);
     return (
       <div className="home-wrapper">
         <Header>
@@ -80,13 +82,15 @@ class ProfilePage extends Component {
               ) : (
               <div>
                 <List>
-                  {this.state.user_comments.map(comment => {
+                  {this.state.user_comments.map((comment, index) => {
                     return (
                       <CommentCard
-                        key={comment.id}
+                        key={index}
                         comment_timestamp={comment.createdAt}
                         message={comment.comment}
                         username={comment.username}
+                        podcast_title={comment.podcastName}
+                        episode_title={comment.podcastEpisodeName}
                       />
                     );
                   })}
