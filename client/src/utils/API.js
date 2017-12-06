@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default {
   searchPodcasts: function (searchTerm) {
-    return axios.get("https://itunes.apple.com/search?entity=podcast&term=" + searchTerm);
+    return axios.get("https://itunes.apple.com/search?entity=podcast&term=" + searchTerm + "&limit=200");
   },
 
   searchEpisodes: function (searchTerm) {
