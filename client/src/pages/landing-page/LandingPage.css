@@ -5,3 +5,9 @@
   flex-direction: column;
   align-items: center;
 }
+
+.landing-intro-wrapper {
+  height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+}

@@ -40,7 +40,10 @@ class LandingPage extends Component {
             <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
-        <LandingPageIntro/>
+        <div className="landing-intro-wrapper">
+          <LandingPageIntro/>
+        </div>
+
       </div>
     );
   };
