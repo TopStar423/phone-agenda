@@ -13,7 +13,8 @@ const EpisodeSearchbar = props =>
 			id="title"
 			required=""
 		/>
-		<button type="submit" >Submit</button>
+		<button type="submit">Submit</button>  
+		<button type="reset" onClick={props.reset}>Reset</button>
 	</form>;
 
 export default EpisodeSearchbar;

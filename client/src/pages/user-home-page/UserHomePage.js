@@ -58,7 +58,7 @@ class UserHomePage extends Component {
     );
   }
 
-  convertTimestamp = (string) => {
+  convertCommentTimestamp = (string) => {
     var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
         "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
         "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
@@ -132,7 +132,7 @@ class UserHomePage extends Component {
                         username={comment.username}
                         podcast_title={comment.podcastName}
                         episode_title={comment.podcastEpisodeName}
-                        convertTimestamp={this.convertTimestamp}
+                        convertCommentTimestamp={this.convertCommentTimestamp}
                       />
                     );
                   })}

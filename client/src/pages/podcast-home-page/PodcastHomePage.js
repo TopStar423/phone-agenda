@@ -28,10 +28,12 @@ class PodcastHomePage extends Component {
     API.getUserData().then(res =>
       this.setState({
         user_data: res.data.data
-      })
+      }, () => {this.loadEpisodes()})
     )
      .catch(err => console.log(err));
+  }
 
+  loadEpisodes = () => {
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
 
@@ -164,6 +166,10 @@ class PodcastHomePage extends Component {
     return String(date);
   }
 
+  reset = () => {
+    this.loadEpisodes();
+  }
+
   render() {
     return (
       <div className="podcast-homepage-wrapper">
@@ -195,6 +201,7 @@ class PodcastHomePage extends Component {
               podcast_title={this.state.podcast_title}
               handleFormSubmit={this.handleFormSubmit}
               query={this.state.episode_title}
+              reset={this.reset}
             />
           </div>
           {this.state.episodes.length === 0 ? (
