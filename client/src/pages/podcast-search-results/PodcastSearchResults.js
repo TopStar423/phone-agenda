@@ -75,7 +75,7 @@ class PodcastSearchResults extends Component {
             <h1><em>No results found.</em></h1>
           ) : (
             <div>
-              <h1><strong>{this.state.podcasts.length} Results Found for: "{this.state.podcast_title}"</strong></h1>
+              <h1><strong>{this.state.podcasts.length} Results</strong></h1>
               <List>
                 {this.state.podcasts.map((podcast, index) => {
                   return (

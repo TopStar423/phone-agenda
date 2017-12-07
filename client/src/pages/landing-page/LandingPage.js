@@ -23,6 +23,7 @@ class LandingPage extends Component {
           )}
         </Header>
         <LandingPageIntro/>
+        <div className="hidden"></div>
       </div>
     );
   };

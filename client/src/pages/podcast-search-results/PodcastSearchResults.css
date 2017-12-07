@@ -1,3 +1,32 @@
 .search-results-wrapper {
   width: 100%;
 }
+
+.search-results-wrapper .results-searchbar {
+  display: flex;
+  margin-top: 30px;
+}
+
+.search-results-wrapper .results-searchbar button {
+  background: #ebe9e9;
+  border: none;
+  padding: 0;
+}
+
+.search-results-wrapper .list-container {
+  background: #fff;
+  margin: 20px;
+  border-radius: 8px;
+}
+
+.search-results-wrapper .list-group {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-results-wrapper .list-group .podcast-thumbnail {
+  margin: 20px;
+}
