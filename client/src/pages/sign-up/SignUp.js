@@ -4,6 +4,7 @@ import Input from "../../components/input/Input";
 import Header from "../../components/partials/header/Header";
 import "./SignUp.css";
 import API from "../../utils/API.js";
+import FullSearchBar from "../../components/search-bar/FullSearchBar";
 
 
 class SignUp extends Component {
@@ -51,7 +52,9 @@ class SignUp extends Component {
   render() {
     return (
       <div className="sign-up-wrapper">
-        <Header/>
+        <Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+        </Header>
         <div className="signUp">
           <form>
             <h2>Sign Up</h2>

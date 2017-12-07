@@ -13,7 +13,7 @@ const EpisodeSearchbar = props =>
 			id="title"
 			required=""
 		/>
-		<button type="submit" >Submit</button>
+		<button type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
 	</form>;
 
 export default EpisodeSearchbar;

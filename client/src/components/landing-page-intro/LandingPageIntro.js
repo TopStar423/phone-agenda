@@ -1,47 +1,17 @@
 import React, {Component} from 'react';
-import API from "./../../utils/API";
-import List from "../list/List";
-import PodcastThumbnail from "../podcast-thumbnail/PodcastThumbnail";
-import PodcastSearchResults from "../../pages/podcast-search-results/PodcastSearchResults"
-import Searchbar from "../search-bar/Searchbar";
+import FullSearchBar from "../search-bar/FullSearchBar";
 import "./LandingPageIntro.css";
 
 
-class LandingPageIntro extends Component {
-  state = {
-    podcast_title: "",
-    podcast_feed_url: "",
-    podcasts: []
-  }
-
-  handleInputChange = event => {
-    const {name, value} = event.target;
-    this.setState({
-      [name]: value
-    });
-  }
-
-  render() {
-    return (
-      <div className="landingIntro">
-        <h1>podtalk</h1>
-        <h2>Join the Conversation</h2>
-        <h3><em>Find a Podcast</em></h3>
-        <Searchbar
-          handleInputChange={this.handleInputChange}
-          podcast_title={this.state.podcast_title}
-        />
-
-        {this.state.podcasts.length === 0 ? (
-          <h3><em></em></h3>
-        ) : (
-          <div>
-            <PodcastSearchResults/>
-          </div>
-        )}
-      </div>
-    );
-  };
-}
+const LandingPageIntro = () => {
+  return (
+    <div className="landingIntro">
+      <h1>podtalk</h1>
+      <h2>Join the Conversation</h2>
+      <h3><em>Find a Podcast</em></h3>
+      <FullSearchBar label={<i class="fa fa-search fa-2x" aria-hidden="true"></i>}/>
+    </div>
+  );
+};
 
 export default LandingPageIntro;
