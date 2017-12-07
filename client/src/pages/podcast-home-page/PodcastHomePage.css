@@ -7,7 +7,7 @@
 .podcast-homepage {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .podcast-homepage .podcast-box {
@@ -37,7 +37,32 @@
 .title-search {
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 70%;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.title-search .episode-searchbar {
+  display: flex;
+  align-items: center;
+}
+
+.title-search .episode-searchbar h2 {
+  margin-right: 10px;
+}
+
+.title-search .episode-searchbar form {
+  display: flex;
+}
+
+.title-search .episode-searchbar form input {
+  font-size: 1.5em;
+  padding: 4px;
+}
+
+.title-search .episode-searchbar form button {
+  background: #ebe9e9;
+  border: none;
 }
 
 .results-box .list-container .list-group {
@@ -48,4 +73,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.results-box .list-container .list-group .episode-card-wrapper {
+  margin-bottom: 30px;
+  width: 70%;
 }

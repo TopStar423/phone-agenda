@@ -10,6 +10,10 @@
 	align-items: center;
 }
 
+.podcast-box .title h2 {
+	font-size: 1.7em;
+}
+
 .podcast-box .link-subscribe {
 	width: 100%;
 	display: flex;
