@@ -26,7 +26,12 @@ class PodcastSearchResults extends Component {
       podcasts: res.data.results
     }))
       .catch(err => console.log(err));
-  };
+    API.getUserData().then(res => {
+      this.setState({
+        userId: res.data.data.id
+      })
+    })
+  }
 
 
   handleInputChange = event => {
@@ -50,6 +55,14 @@ class PodcastSearchResults extends Component {
   };
 
 
+  logout(){
+    API.logout().then(
+      this.setState({
+        userId: ""
+      })
+    );
+  }
+
   render() {
     return (
       <div className="search-results-wrapper">
@@ -60,7 +73,7 @@ class PodcastSearchResults extends Component {
               <Link to="/login">Log In</Link>
             </div>
           ) : (
-            <Link to="/">Log Out</Link>
+            <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <ResultsPageSearchbar

@@ -21,13 +21,20 @@ class PodcastHomePage extends Component {
     image: "",
     episodes: [],
     episode_title: "",
-    userId: ""
+    user_data: {}
   }
 
   componentDidMount() {
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data.data
+      })
+    )
+     .catch(err => console.log(err));
+
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
-    
+
     API.searchEpisodes(replaced).then(function(res){
       const episodesArr = res.data.rss.items.map(function(item) {
         let mp3 = "";
@@ -63,75 +70,93 @@ class PodcastHomePage extends Component {
     });
   }
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    if(this.state.episode_title !== ""){
+      this.episodeSearch();
+    }
+  }
+
   handleStripHTML = (description) => {
     var stripped = description.replace(/<[^>]+>/g, '');
     var decoded = he.decode(stripped)
     return decoded;
   }
 
-  listEpisodes = () => {
-    for (var i = 0; i < this.state.episodes.length; i++) {
-      console.log(this.state.episodes[i]);
-    }
-  }
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    this.episodeSearch();
-  }
-
   episodeSearch = (title) => {
-    var tempArr = [];
-    var resultsArr = [];
+    if(title !== null){
+      var countArr = [];
+      var resultsArr = [];
 
-    // convert search term(s) into array of words
-    var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
-      return word.toLowerCase();
-    });
-
-    // now, go through the episodes array, all the titles
-    for(var i = 0; i < this.state.episodes.length; i++){
-      tempArr[i] = -1;
-      resultsArr[i] = -1;
-      
-      // convert all the episode titles into another array of words
-      var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
+      var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
         return word.toLowerCase();
       });
 
-      // now, record all the matches
-      for(var j = 0; j < titleArr.length; j++){
-        for(var k = 0; k < epTitleArr.length; k++){
-          if(titleArr[j] === epTitleArr[k]){
-            tempArr[i]++; 
-            // tempArr records all the scores in each index
+      for(var i = 0; i < this.state.episodes.length; i++){
+        countArr[i] = 0;
+        resultsArr[i] = 0;
 
-            resultsArr[i] = this.state.episodes[i];
+        var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
+          return word.toLowerCase();
+        });
+
+        for(var j = 0; j < titleArr.length; j++){
+          for(var k = 0; k < epTitleArr.length; k++){
+            if(titleArr[j] === epTitleArr[k]){
+              countArr[i]++; // countArr records all the scores in each index
+              resultsArr[i] = this.state.episodes[i]; // resultsArr records all the episodes that match
+            }
           }
         }
       }
     }
 
-    //tempArr.sort(function(a, b){return b-a})
+    // selection sort, mofos
+    for (let i = 0; i < (countArr.length - 1); i++){
+      let max = i;
+      
+      for (let j = (i + 1); j < countArr.length; j++){
+        if (countArr[j] >= countArr[max]){
+          max = j;
+        }
+      }
 
+      let temp = countArr[max];
+      let tempObj = resultsArr[max];
+
+      countArr[max] = countArr[i];
+      resultsArr[max] = resultsArr[i];
+      countArr[i] = temp;
+      resultsArr[i] = tempObj;
+    }
+
+    // gets rid of all other indices that are empty
     for(var x = 0; x < resultsArr.length; x++){
-      if(resultsArr[x] === -1){
+      if(resultsArr[x] === 0){
         resultsArr.splice(x--, 1);
       }
     }
-
-    // for(var x = 0; x < resultsArr.length; x++){
-    //   console.log(resultsArr[x]);
-    // }
 
     this.setState({
       episodes: resultsArr
     });    
   }
 
-  encodeUrl = (url) =>{
-    var result = encodeURIComponent(url);
-    return result;
+  subscribe = () => {
+    API.savePodcast({
+      imageUrl: this.state.image,
+      podcastName: this.state.podcast_title,
+      userId: this.state.user_data.id
+    })
+     .catch(err => console.log(err));
+  }
+
+  logout(){
+    API.logout().then(
+      this.setState({
+        user_data: {}
+      })
+    );
   }
 
   render() {
@@ -139,13 +164,13 @@ class PodcastHomePage extends Component {
       <div className="podcast-homepage-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {!this.state.userId ? (
+          {this.state.user_data.length === 0 ? (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
           ) : (
-            <Link to="/">Log Out</Link>
+            <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <div>
@@ -156,25 +181,24 @@ class PodcastHomePage extends Component {
               // podcast_url={this.state.podcast_url}
               image={this.state.image}
               handleStripHTML={this.handleStripHTML}
+              subscribe={this.subscribe}
             />
           </div>
-
+          <div className="episode-searchbar">
+            <h2>Find an episode:</h2>
+            <EpisodeSearchbar
+              handleInputChange={this.handleInputChange}
+              podcast_title={this.state.podcast_title}
+              handleFormSubmit={this.handleFormSubmit}
+              query={this.state.episode_title}
+            />
+          </div>
           {this.state.episodes.length === 0 ? (
             <h3><em>No episodes found.</em></h3>
           ) : (
             <div className="results-box">
               <div className="title-search">
                 <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
-                <div className="episode-search">
-                  <h2>Find an episode:</h2>
-                  <EpisodeSearchbar
-                    handleInputChange={this.handleInputChange}
-                    podcast_title={this.state.podcast_title}
-                    handleFormSubmit={this.handleFormSubmit}
-                    query={this.state.episode_title}
-                  />
-                </div>
-
               </div>
               <List>
                 {this.state.episodes.map((episode, index) => {
@@ -188,7 +212,6 @@ class PodcastHomePage extends Component {
                       episode_url={episode.url}
                       url={episode.mp3}
                       handleStripHTML={this.handleStripHTML}
-                      encodeUrl={this.encodeUrl}
                     />
                   );
                 })}

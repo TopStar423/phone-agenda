@@ -24,7 +24,7 @@ class Routes extends Component {
         <Route exact path="/podcast-home/:id" component={PodcastHomePage} />
         <Route exact path="/search-results/:id" component={PodcastSearchResults}/>
         <Route exact path="/profile" component={ProfilePage}/>
-        <Route exact path="/episode/:pod_id/:ep_url" component={EpisodePage}/>
+        <Route exact path="/episode/:pod_id/:ep_id" component={EpisodePage}/>
         <Route exact path="/home" component={UserHomePage}/>
         <Route exact path="/settings" component={AccountSettings}/>
         <Route exact path="/signup" component={SignUp}/>

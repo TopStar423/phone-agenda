@@ -7,7 +7,7 @@ import ReactAudioPlayer from 'react-audio-player';
 
 const EpisodeCard = (props) => (
 	<div className="episode-card-box"> 
-	  <Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_url)}`}>
+	  <Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_title)}`}>
 	  	<h2>{props.episode_title}</h2>
 	  </Link>
   	

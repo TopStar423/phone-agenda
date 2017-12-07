@@ -16,18 +16,41 @@ import "./EpisodePage.css";
 class EpisodePage extends Component {
   state = {
     episode: {},
+    mp3_enclosure: "",
+    mp3_media_content: "",
     podcast_title: "",
     episode_comments: [],
-    userId: ""
+    user_data: {}
   }
 
   componentDidMount() {
-    console.log(this.props.match.params);
+    let mp3 = "";
+    let episode = {};
+
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
-    API.searchEpisode(replaced, this.props.match.params.ep_url).then(res => this.setState({
+    API.searchEpisode(replaced, this.props.match.params.ep_id).then(res => this.setState({
+      mp3: res.data.rss.enclosures[0].url !== undefined ? res.data.rss.enclosures[0].url :res.data.rss.media.content[0].url,
       episode: res.data.rss,
       podcast_title: replaced
     }))
+      .catch(err => console.log(err));
+
+    API.getUserData().then(res =>
+      this.setState({
+        user_data: res.data.data
+      }, () => {
+        this.getEpisodeComments();
+      }))
+     .catch(err => console.log(err));
+
+  }
+
+  getEpisodeComments = () => {
+    API.getEpisodeComments(this.props.match.params.pod_id, this.props.match.params.ep_id).then(res =>
+      this.setState({
+        episode_comments: res.data
+      })
+    )
       .catch(err => console.log(err));
   }
 
@@ -61,20 +84,75 @@ class EpisodePage extends Component {
     }
   }
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    var temp = decodeURIComponent(this.props.match.params.ep_id);
+
+    API.saveComment({
+      comment: this.state.comment,
+      podcastName: this.props.match.params.pod_id,
+      podcastEpisodeName: temp,
+      userId: this.state.user_data.id,
+      username: this.state.user_data.username
+    });
+
+    this.getEpisodeComments();
+  }
+
+  handleInputChange = event =>{
+    const {name, value} = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  logout(){
+    API.logout().then(
+      this.setState({
+        user_data: {}
+      })
+    );
+  }
+
+  convertTimestamp = (string) => {
+    var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
+        "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
+        "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
+    var d = string.match(new RegExp(regexp));
+
+    var offset = 0;
+    var date = new Date(d[1], 0, 1);
+
+    if (d[3]) { date.setMonth(d[3] - 1); }
+    if (d[5]) { date.setDate(d[5]); }
+    if (d[7]) { date.setHours(d[7]); }
+    if (d[8]) { date.setMinutes(d[8]); }
+    if (d[10]) { date.setSeconds(d[10]); }
+    if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
+    if (d[14]) {
+        offset = (Number(d[16]) * 60) + Number(d[17]);
+        offset *= ((d[15] == '-') ? 1 : -1);
+    }
+
+    offset -= date.getTimezoneOffset();
+    let time = (Number(date) + (offset * 60 * 1000));
+    date.setTime(Number(time));
+    var res = String(date);
+    return res;
+  }
+
   render() {
-    console.log(this.props.match.params);
-    console.log("state", this.state.episode)
     return (
       <div className="episode-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {!this.state.userId ? (
+          {this.state.user_data.length === 0 ? (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
           ) : (
-            <Link to="/">Log Out</Link>
+            <Link to="/" onClick={this.logout} >Log Out</Link>
           )}
         </Header>
         <div>
@@ -86,34 +164,32 @@ class EpisodePage extends Component {
             episode_release_date={this.state.episode.released}
             url={this.state.episode.url}
             handleStripHTML={this.handleStripHTML}
+            url={this.state.mp3}
           />
-
-          {this.state.episode_comments.length === 0 ? (
-            <li>
-              <h3><em>No comments to display.</em></h3>
-            </li>
-          ) : (
             <div>
-              <AddComment/>
-              <List length={this.state.episode_comments.length}>
+              <AddComment
+              handleFormSubmit = {this.handleFormSubmit}
+              handleInputChange = {this.handleInputChange}
+              comment = {this.state.comment}
+              />
+              <List>
                 {this.state.episode_comments.map(comment => {
                   return (
                     <CommentCard
-                      key={comment.title}
-                      author={comment.author}
-                      comment_timestamp={comment.timestamp}
-                      message={comment.message}
+                      key={comment.id}
+                      comment_timestamp={comment.createdAt}
+                      message={comment.comment}
+                      username={comment.username}
+                      convertTimestamp={this.convertTimestamp}
                     />
                   );
                 })}
               </List>
             </div>
-          )}
         </div>
       </div>
     )
   }
 }
 
-
-        export default EpisodePage;
+export default EpisodePage;

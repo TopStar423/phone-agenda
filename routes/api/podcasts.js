@@ -18,16 +18,40 @@ router.get("/comments/:podcastName/:podcastEpisodeName", function (req, res) {
   db.comments.findAll({
     where: {
       podcastName: req.params.podcastName,
-      podcaseEpisodeName: req.params.podcastEpisodeName
-    }
+      podcastEpisodeName: req.params.podcastEpisodeName
+    },
+    order: [['createdAt', 'DESC']]
   }).then(function (comments) {
     res.json(comments);
   })
 });
 
+//get saved comments for all podcasts - to be used to retrieve comments for users subscribed podcasts
+router.get("/comments/:podcastName", function (req, res) {
+  db.comments.findAll({
+    where: {
+      podcastName: req.params.podcastName,
+    },
+    order: [['createdAt', 'DESC']]
+  }).then(function (comments) {
+    res.json(comments);
+  })
+});
+
+//get saved podcasts for logged in user
+router.get("/userComments/:userID", isAuthenticated, function (req, res) {
+  db.comments.findAll({
+    where: {
+      userID: req.params.userID
+    },
+    order: [['createdAt', 'DESC']]
+  }).then(function (comments) {
+    res.json(comments);
+  })
+});
 
 // // post route to save save comment on current podcast episode page
-router.post("/comment/save", isAuthenticated, function (req, res) {
+router.post("/comments/save", isAuthenticated, function (req, res) {
   db.comments.create(req.body, function (result) {
     console.log(result);
     // res.redirect("/");
@@ -35,8 +59,9 @@ router.post("/comment/save", isAuthenticated, function (req, res) {
       res.json("Comment saved");
     }
   )
-    .catch(function(){
+    .catch(function(err){
       res.json("Please enter a comment");
+      console.log(err);
     });
 });
 
@@ -45,7 +70,7 @@ router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
   db.savedPodcasts.findAll({
     where: {
       userID: req.params.userID
-    }
+    },
   }).then(function (savedPodcast) {
     res.json(savedPodcast);
   })
@@ -55,11 +80,11 @@ router.get("/savedPodcast/:userID", isAuthenticated, function (req, res) {
 router.post("/savedPodcast/save/", isAuthenticated, function (req, res) {
   db.savedPodcasts.create(req.body, function(result){})
     .then(function() {
-        res.json("Podcast saved");
+        res.json("Podcast saved.");
       }
     )
     .catch(function(){
-     res.json("Podcast is already saved");
+     res.json("Podcast is already saved.");
     });
 });
 

@@ -14,5 +14,4 @@ const LandingPageIntro = () => {
   );
 };
 
-
 export default LandingPageIntro;
