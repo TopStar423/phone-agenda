@@ -10,7 +10,7 @@ const EpisodeCard = (props) => (
     </Link>
     
     <h2>{props.handleStripHTML(props.episode_description)}</h2>
-    <h2>{props.episode_release_date}</h2>
+    <h2><i>Released: {props.convertTimestamp(props.episode_release_date)}</i></h2>
     
     <a href={props.url}><Button label="Play Episode" /></a>
   </div>

@@ -60,7 +60,6 @@ class PodcastHomePage extends Component {
         image: res.data.artworkUrl,
         episodes: episodesArr
       })
-
     }).catch(err => console.log(err));
   }
 
@@ -160,6 +159,11 @@ class PodcastHomePage extends Component {
     );
   }
 
+  convertTimestamp = (string) => {
+    var date = new Date(Number(string));
+    return String(date);
+  }
+
   render() {
     return (
       <div className="podcast-homepage-wrapper">
@@ -208,10 +212,11 @@ class PodcastHomePage extends Component {
                       podcast_title={this.state.podcast_title}
                       episode_title={episode.title}
                       episode_description={episode.description}
-                      episode_release_date={episode.released}
+                      episode_release_date={episode.created}
                       episode_url={episode.url}
                       url={episode.mp3}
                       handleStripHTML={this.handleStripHTML}
+                      convertTimestamp={this.convertTimestamp}
                     />
                   );
                 })}
