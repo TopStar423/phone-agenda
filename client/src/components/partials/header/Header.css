@@ -1,5 +1,6 @@
 .header a {
   margin: 10px;
+  text-decoration: none;
 }
 
 .header {
@@ -10,7 +11,7 @@
   justify-content: space-between;
   font-size: 1.4em;
   background: #fff;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px -1px 5px 0px rgba(0,0,0,0.75);
 }
 
 .header .left {
@@ -18,5 +19,26 @@
 }
 
 .header .right {
+  display: flex;
   margin-right: 20px;
+}
+
+.header .right form {
+  display: flex;
+  align-items: center;
+}
+
+.header .right form .form-control {
+  width: 150px;
+}
+
+.header .right form button {
+  padding: 0;
+  height: 25px;
+  border: none;
+}
+
+.links {
+  display: flex;
+  align-items: center;
 }

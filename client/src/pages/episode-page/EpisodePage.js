@@ -6,6 +6,8 @@ import List from "../../components/list/List";
 import Header from './../../components/partials/header/Header';
 import {Link} from "react-router-dom";
 import './EpisodePage.css';
+import FullSearchBar from "../../components/search-bar/FullSearchBar";
+
 
 import API from "./../../utils/API";
 import he from "he";
@@ -143,8 +145,9 @@ class EpisodePage extends Component {
     return (
       <div className="episode-wrapper">
         <Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
           {this.state.user_data.length === 0 ? (
-            <div>
+            <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
@@ -159,6 +162,7 @@ class EpisodePage extends Component {
             episode_title={this.state.episode.title}
             episode_description={this.state.episode.description}
             episode_release_date={this.state.episode.released}
+            url={this.state.episode.url}
             handleStripHTML={this.handleStripHTML}
             url={this.state.mp3}
           />

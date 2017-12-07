@@ -5,6 +5,7 @@ import Header from './../../components/partials/header/Header';
 import {Link} from "react-router-dom";
 import List from "../../components/list/List";
 import './ProfilePage.css';
+import FullSearchBar from "../../components/search-bar/FullSearchBar";
 import API from "./../../utils/API";
 import PodcastThumbnail from "../../components/podcast-thumbnail/PodcastThumbnail";
 
@@ -81,7 +82,15 @@ class ProfilePage extends Component {
     return (
       <div className="home-wrapper">
         <Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          {!this.state.userId ? (
+            <div className="links">
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log In</Link>
+            </div>
+          ) : (
           <Link to="/" onClick={this.logout}>Log Out</Link>
+          )}
         </Header>
         <div className="home-main">
           <div className="sidebar">
