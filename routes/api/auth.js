@@ -64,14 +64,14 @@ router.post("/signup", function(req, res) {
 router.get('/logout', function(req, res) {
     console.log('logging out');
     req.logout();
-    res.redirect('/api/users');
+    res.redirect('/api/auth/user_data');
 });
 
 // Route for getting some data about our user to be used client side
 router.get("/user_data", function(req, res) {
     if (!req.user) {
         // The user is not logged in, send back an empty object
-        utils.respond(401, null, null, res)
+        res.json({});
     } else {
         // Otherwise send back the user's email and id
         // Sending back a password, even a hashed password, isn't a good idea
