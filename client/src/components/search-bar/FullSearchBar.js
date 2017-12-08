@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Input from '../input/Input';
 import {withRouter} from "react-router-dom";
 
-
-
 class FullSearchBar extends Component {
   state = {
     podcast_title: "",

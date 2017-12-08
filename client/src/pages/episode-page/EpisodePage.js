@@ -114,14 +114,19 @@ class EpisodePage extends Component {
     );
   }
 
-  convertTimestamp = (string) => {
-    var date = new Date(Number(string));
-    return String(date);
+  convertTimestamp = (number) => {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    var date = new Date(number);
+    var temp = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+    return temp;
   }
 
   convertCommentTimestamp = (string) => {
     var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
-        "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
+        "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(([0-9]+))?)?" +
         "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
     var d = string.match(new RegExp(regexp));
 
@@ -136,7 +141,7 @@ class EpisodePage extends Component {
     if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
     if (d[14]) {
         offset = (Number(d[16]) * 60) + Number(d[17]);
-        offset *= ((d[15] == '-') ? 1 : -1);
+        offset *= ((d[15] === '-') ? 1 : -1);
     }
 
     offset -= date.getTimezoneOffset();
@@ -151,7 +156,7 @@ class EpisodePage extends Component {
     return (
       <div className="episode-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
           {this.state.user_data ? (
             <Link to="/" onClick={this.logout} >Log Out</Link>
           ) : (
@@ -163,20 +168,19 @@ class EpisodePage extends Component {
         </Header>
         <div className="episode-main">
           <EpisodeCard
-            key={this.state.podcast_title}
             podcast_title={this.state.podcast_title}
             episode_title={this.state.episode.title}
             episode_description={this.state.episode.description}
-            episode_release_date={this.state.episode.created}
-            convertTimestamp={this.convertTimestamp}
+            episode_created={this.state.episode.created}
+            episode_url={this.state.mp3}
             handleStripHTML={this.handleStripHTML}
-            url={this.state.mp3}
+            convertTimestamp={this.convertTimestamp}
           />
             <div>
               <AddComment
-              handleFormSubmit = {this.handleFormSubmit}
-              handleInputChange = {this.handleInputChange}
-              comment = {this.state.comment}
+                handleFormSubmit = {this.handleFormSubmit}
+                handleInputChange = {this.handleInputChange}
+                comment = {this.state.comment}
               />
               <List>
                 {this.state.episode_comments.map(comment => {

@@ -12,10 +12,10 @@ const EpisodeCard = (props) => (
 	  </Link>
  
   	<p>{props.handleStripHTML(props.episode_description)}</p>
-  	<h2><i>Released: {props.convertTimestamp(props.episode_release_date)}</i></h2>
+  	<h3><i>Released: {props.convertTimestamp(props.episode_created)}</i></h3>
 		<div className="audio-comments">
 			<ReactAudioPlayer
-				src={props.url}
+				src={props.episode_url}
 				controls
 			/>
 			<Button className="episode-button" label="Comments" />

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PodcastCard from "../../components/podcast-card/PodcastCard";
 import CommentCard from "../../components/comment-card/CommentCard";
 import Header from './../../components/partials/header/Header';
 import {Link} from "react-router-dom";
@@ -84,7 +83,7 @@ class ProfilePage extends Component {
     return (
       <div className="home-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
           {this.state.user_data ? (
           <Link to="/" onClick={this.logout}>Log Out</Link>
           ) : (

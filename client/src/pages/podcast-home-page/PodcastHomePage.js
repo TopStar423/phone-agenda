@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import Input from "../../components/input/Input";
 import EpisodeSearchbar from "../../components/episode-search-bar/EpisodeSearchbar";
 import PodcastCard from "../../components/podcast-card/PodcastCard";
 import EpisodeCard from "../../components/episode-card/EpisodeCard";
 import List from "../../components/list/List";
 import Header from './../../components/partials/header/Header';
-import Searchbar from '../../components/search-bar/ResultsPageSearchbar';
 import {Link} from "react-router-dom";
 import FullSearchBar from "../../components/search-bar/FullSearchBar";
 import API from "./../../utils/API";
@@ -153,6 +151,18 @@ class PodcastHomePage extends Component {
       .catch(err => console.log(err));
   }
 
+
+
+  convertTimestamp = (number) => {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    var date = new Date(number);
+    var temp = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+    return temp;
+  }
+
   logout() {
     API.logout().then(
       this.setState({
@@ -161,21 +171,15 @@ class PodcastHomePage extends Component {
     );
   }
 
-  convertTimestamp = (string) => {
-    var date = new Date(Number(string));
-    return String(date);
-  }
-
   reset = () => {
     this.loadEpisodes();
   }
 
   render() {
-    console.log("episodes", this.state.episodes)
     return (
       <div className="podcast-homepage-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
           {this.state.user_data ? (
             <Link to="/" onClick={this.logout}>Log Out</Link>
           ) : (
@@ -196,48 +200,19 @@ class PodcastHomePage extends Component {
           />
         </div>
         <div className="title-search">
-          <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
+          <h1><strong>{this.state.episodes.length} Episodes Found</strong></h1>
           <div className="episode-searchbar">
             <h2>Find an episode:</h2>
             <EpisodeSearchbar
-              handleInputChange={this.handleInputChange}
               podcast_title={this.state.podcast_title}
+              handleInputChange={this.handleInputChange}
               handleFormSubmit={this.handleFormSubmit}
               query={this.state.episode_title}
               reset={this.reset}
             />
           </div>
-
-          {this.state.episodes.length === 0 ? (
-            <h3><em>No episodes found.</em></h3>
-          ) : (
-            <div className="results-box">
-              <div className="title-search">
-                <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
-              </div>
-              <List>
-                {this.state.episodes.map((episode, index) => {
-                  return (
-                    <EpisodeCard
-                      key={index}
-                      podcast_title={this.state.podcast_title}
-                      episode_title={episode.title}
-                      episode_description={episode.description}
-                      episode_release_date={episode.created}
-                      episode_url={episode.url}
-                      url={episode.mp3}
-                      handleStripHTML={this.handleStripHTML}
-                      convertTimestamp={this.convertTimestamp}
-                    />
-                  );
-                })}
-              </List>
-            </div>
-          )}
         </div>
-        {this.state.episodes.length === 0 ? (
-          <h3><em>No episodes found.</em></h3>
-        ) : (
+        <div>
           <div className="results-box">
             <List>
               {this.state.episodes.map((episode, index) => {
@@ -247,16 +222,16 @@ class PodcastHomePage extends Component {
                     podcast_title={this.state.podcast_title}
                     episode_title={episode.title}
                     episode_description={episode.description}
-                    episode_release_date={episode.released}
-                    episode_url={episode.url}
-                    url={episode.mp3}
+                    episode_created={episode.created}
+                    episode_url={episode.mp3}
                     handleStripHTML={this.handleStripHTML}
+                    convertTimestamp={this.convertTimestamp}
                   />
                 );
               })}
             </List>
           </div>
-        )}
+        </div>
       </div>
     );
   };
