@@ -28,12 +28,15 @@ class UserHomePage extends Component {
   }
 
   getHomePageStuff() {
-    API.getUserPodcasts(this.state.user_data.id).then(res =>
+    if (this.state.user_data){
+      API.getUserPodcasts(this.state.user_data.id).then(res =>
       this.setState({
         user_podcasts: res.data
       }, () => this.getSavedPodcastComments())
     )
       .catch(err => console.log(err));
+    }
+    
   }
 
   getSavedPodcastComments(){
@@ -54,7 +57,7 @@ class UserHomePage extends Component {
   logout(){
     API.logout().then(
       this.setState({
-        userId: ""
+        user_data: {}
       })
     );
   }

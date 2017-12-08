@@ -8,21 +8,22 @@ import API from "./../../utils/API";
 
 class LandingPage extends Component {
   state = {
-    userId: ""
+    user_data: {}
   };
 
   componentDidMount(){
     API.getUserData().then(res => {
       this.setState({
-        userId: res.data.data.id
+        user_data: res.data.data
       })
+      console.log(this.state.user_data)
     })
   }
 
   logout(){
     API.logout().then(
       this.setState({
-        userId: ""
+        user_data: {}
       })
     );
   }
@@ -31,13 +32,13 @@ class LandingPage extends Component {
     return (
       <div className="landing-page-wrapper">
         <Header>
-          {!this.state.userId ? (
+          {this.state.user_data ? (
+            <Link to="/" onClick={this.logout}>Log Out</Link>
+          ) : (
             <div>
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
-          ) : (
-            <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <LandingPageIntro/>

@@ -151,13 +151,13 @@ class EpisodePage extends Component {
       <div className="episode-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {this.state.user_data.length === 0 ? (
+          {this.state.user_data ? (
+            <Link to="/" onClick={this.logout} >Log Out</Link>
+          ) : (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
-          ) : (
-            <Link to="/" onClick={this.logout} >Log Out</Link>
           )}
         </Header>
         <div>
