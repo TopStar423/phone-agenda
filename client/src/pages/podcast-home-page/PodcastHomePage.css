@@ -1,7 +1,13 @@
+.podcast-homepage-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .podcast-homepage {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .podcast-homepage .podcast-box {
@@ -26,38 +32,58 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 40px 0;
 }
 
-.results-box .title-search {
-  width: 85vw;
+.title-search {
   display: flex;
   justify-content: space-between;
+  width: 70%;
+  align-items: center;
+  margin-top: 60px;
 }
 
-.results-box .title-search .episode-search {
+.title-search .episode-searchbar {
   display: flex;
   align-items: center;
 }
 
-.results-box .title-search .searchBar {
+.title-search .episode-searchbar h2 {
+  margin-right: 10px;
+}
+
+.title-search .episode-searchbar form {
   display: flex;
+}
+
+.title-search .episode-searchbar form input {
+  font-size: 1.5em;
+  padding: 4px;
+}
+
+.title-search .episode-searchbar form button {
+  background: #ebe9e9;
+  border: none;
+}
+
+.results-box {
+  width: 100%;
+}
+
+.results-box .list-container {
+  width: 100%;
+}
+
+.results-box .list-container .list-group {
+  padding: 0;
+}
+
+.results-box .list-container .list-group {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  font-size: 1.4em;
 }
 
-.results-box .title-search .searchBar input {
-  padding: 5px;
-  width: 200px;
-  margin-left: 8px;
-}
-
-.results-box .title-search .searchBar button {
-  padding: 5px 10px;
-}
-
-.episode-searchbar{
-  margin-top: 20px;
-  margin-left: 70%;
-  margin-bottom: none;
+.results-box .list-container .list-group .episode-card-wrapper {
+  margin-bottom: 30px;
+  width: 70%;
 }

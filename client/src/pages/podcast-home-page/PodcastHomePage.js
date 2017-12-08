@@ -37,18 +37,18 @@ class PodcastHomePage extends Component {
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
 
-    API.searchEpisodes(replaced).then(function(res){
-      const episodesArr = res.data.rss.items.map(function(item) {
+    API.searchEpisodes(replaced).then(function (res) {
+      const episodesArr = res.data.rss.items.map(function (item) {
         let mp3 = "";
         try {
           mp3 = item.media.content[0].url;
-        } catch(e) {
+        } catch (e) {
           mp3 = "";
         }
 
         try {
           mp3 = mp3.length > 1 ? mp3 : item.enclosures[0].url;
-        } catch(e) {
+        } catch (e) {
           mp3 = mp3.length > 1 ? mp3 : [];
         }
         item.mp3 = mp3;
@@ -74,7 +74,7 @@ class PodcastHomePage extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if(this.state.episode_title !== ""){
+    if (this.state.episode_title !== "") {
       this.episodeSearch();
     }
   }
@@ -86,25 +86,25 @@ class PodcastHomePage extends Component {
   }
 
   episodeSearch = (title) => {
-    if(title !== null){
+    if (title !== null) {
       var countArr = [];
       var resultsArr = [];
 
-      var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function(word) {
+      var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function (word) {
         return word.toLowerCase();
       });
 
-      for(var i = 0; i < this.state.episodes.length; i++){
+      for (var i = 0; i < this.state.episodes.length; i++) {
         countArr[i] = 0;
         resultsArr[i] = 0;
 
-        var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function(word) {
+        var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function (word) {
           return word.toLowerCase();
         });
 
-        for(var j = 0; j < titleArr.length; j++){
-          for(var k = 0; k < epTitleArr.length; k++){
-            if(titleArr[j] === epTitleArr[k]){
+        for (var j = 0; j < titleArr.length; j++) {
+          for (var k = 0; k < epTitleArr.length; k++) {
+            if (titleArr[j] === epTitleArr[k]) {
               countArr[i]++; // countArr records all the scores in each index
               resultsArr[i] = this.state.episodes[i]; // resultsArr records all the episodes that match
             }
@@ -114,11 +114,11 @@ class PodcastHomePage extends Component {
     }
 
     // selection sort, mofos
-    for (let i = 0; i < (countArr.length - 1); i++){
+    for (let i = 0; i < (countArr.length - 1); i++) {
       let max = i;
-      
-      for (let j = (i + 1); j < countArr.length; j++){
-        if (countArr[j] >= countArr[max]){
+
+      for (let j = (i + 1); j < countArr.length; j++) {
+        if (countArr[j] >= countArr[max]) {
           max = j;
         }
       }
@@ -133,15 +133,15 @@ class PodcastHomePage extends Component {
     }
 
     // gets rid of all other indices that are empty
-    for(var x = 0; x < resultsArr.length; x++){
-      if(resultsArr[x] === 0){
+    for (var x = 0; x < resultsArr.length; x++) {
+      if (resultsArr[x] === 0) {
         resultsArr.splice(x--, 1);
       }
     }
 
     this.setState({
       episodes: resultsArr
-    });    
+    });
   }
 
   subscribe = () => {
@@ -150,10 +150,10 @@ class PodcastHomePage extends Component {
       podcastName: this.state.podcast_title,
       userId: this.state.user_data.id
     })
-     .catch(err => console.log(err));
+      .catch(err => console.log(err));
   }
 
-  logout(){
+  logout() {
     API.logout().then(
       this.setState({
         user_data: {}
@@ -171,6 +171,7 @@ class PodcastHomePage extends Component {
   }
 
   render() {
+    console.log("episodes", this.state.episodes)
     return (
       <div className="podcast-homepage-wrapper">
         <Header>
@@ -184,17 +185,18 @@ class PodcastHomePage extends Component {
             </div>
           )}
         </Header>
-        <div>
-          <div className="podcast-homepage">
-            <PodcastCard
-              podcast_description={this.state.podcast_description}
-              podcast_title={this.props.match.params.id}
-              // podcast_url={this.state.podcast_url}
-              image={this.state.image}
-              handleStripHTML={this.handleStripHTML}
-              subscribe={this.subscribe}
-            />
-          </div>
+        <div className="podcast-homepage">
+          <PodcastCard
+            podcast_description={this.state.podcast_description}
+            podcast_title={this.props.match.params.id}
+            // podcast_url={this.state.podcast_url}
+            image={this.state.image}
+            handleStripHTML={this.handleStripHTML}
+            subscribe={this.subscribe}
+          />
+        </div>
+        <div className="title-search">
+          <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
           <div className="episode-searchbar">
             <h2>Find an episode:</h2>
             <EpisodeSearchbar
@@ -205,6 +207,7 @@ class PodcastHomePage extends Component {
               reset={this.reset}
             />
           </div>
+
           {this.state.episodes.length === 0 ? (
             <h3><em>No episodes found.</em></h3>
           ) : (
@@ -232,6 +235,28 @@ class PodcastHomePage extends Component {
             </div>
           )}
         </div>
+        {this.state.episodes.length === 0 ? (
+          <h3><em>No episodes found.</em></h3>
+        ) : (
+          <div className="results-box">
+            <List>
+              {this.state.episodes.map((episode, index) => {
+                return (
+                  <EpisodeCard
+                    key={index}
+                    podcast_title={this.state.podcast_title}
+                    episode_title={episode.title}
+                    episode_description={episode.description}
+                    episode_release_date={episode.released}
+                    episode_url={episode.url}
+                    url={episode.mp3}
+                    handleStripHTML={this.handleStripHTML}
+                  />
+                );
+              })}
+            </List>
+          </div>
+        )}
       </div>
     );
   };

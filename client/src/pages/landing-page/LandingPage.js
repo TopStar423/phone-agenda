@@ -41,7 +41,10 @@ class LandingPage extends Component {
             </div>
           )}
         </Header>
-        <LandingPageIntro/>
+        <div className="landing-intro-wrapper">
+          <LandingPageIntro/>
+        </div>
+
       </div>
     );
   };

@@ -1,0 +1,18 @@
+.episode-card-wrapper {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.episode-card-wrapper h2 {
+  font-size: 2em;
+}
+
+.episode-card-wrapper p {
+  font-size: 1.4em;
+}
+
+.audio-comments {
+  display: flex;
+  justify-content: space-between;
+}
