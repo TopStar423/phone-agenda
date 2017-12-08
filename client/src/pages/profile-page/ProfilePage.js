@@ -28,6 +28,7 @@ class ProfilePage extends Component {
   }
 
   getUserStuff = () => {
+    if (this.state.user_data){
     API.getUserComments(this.state.user_data.id).then(res =>
       this.setState({
         user_comments: res.data
@@ -40,7 +41,8 @@ class ProfilePage extends Component {
         user_podcasts: res.data
       })
     )
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); 
+    }
   }
 
   logout(){
@@ -51,7 +53,7 @@ class ProfilePage extends Component {
     );
   }
 
-  convertTimestamp = (string) => {
+  convertCommentTimestamp = (string) => {
     var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
         "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
         "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
@@ -83,13 +85,13 @@ class ProfilePage extends Component {
       <div className="home-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {!this.state.userId ? (
+          {this.state.user_data ? (
+          <Link to="/" onClick={this.logout}>Log Out</Link>
+          ) : (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
-          ) : (
-          <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <div className="home-main">
@@ -133,7 +135,7 @@ class ProfilePage extends Component {
                         username={comment.username}
                         podcast_title={comment.podcastName}
                         episode_title={comment.podcastEpisodeName}
-                        convertTimestamp={this.convertTimestamp}
+                        convertCommentTimestamp={this.convertCommentTimestamp}
                       />
                     );
                   })}

@@ -16,8 +16,7 @@ import "./EpisodePage.css";
 class EpisodePage extends Component {
   state = {
     episode: {},
-    mp3_enclosure: "",
-    mp3_media_content: "",
+    mp3: "",
     podcast_title: "",
     episode_comments: [],
     user_data: {}
@@ -28,8 +27,9 @@ class EpisodePage extends Component {
     let episode = {};
 
     var replaced = this.props.match.params.pod_id.split(' ').join('+');
-    API.searchEpisode(replaced, this.props.match.params.ep_id).then(res => this.setState({
-      mp3: res.data.rss.enclosures[0].url !== undefined ? res.data.rss.enclosures[0].url :res.data.rss.media.content[0].url,
+    API.searchEpisode(replaced, this.props.match.params.ep_id).then(res => 
+      this.setState({
+      mp3: res.data.rss.enclosures[0].url !== undefined ? res.data.rss.enclosures[0].url : res.data.rss.media.content[0].url,
       episode: res.data.rss,
       podcast_title: replaced
     }))
@@ -115,6 +115,11 @@ class EpisodePage extends Component {
   }
 
   convertTimestamp = (string) => {
+    var date = new Date(Number(string));
+    return String(date);
+  }
+
+  convertCommentTimestamp = (string) => {
     var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
         "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
         "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
@@ -147,13 +152,13 @@ class EpisodePage extends Component {
       <div className="episode-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {this.state.user_data.length === 0 ? (
+          {this.state.user_data ? (
+            <Link to="/" onClick={this.logout} >Log Out</Link>
+          ) : (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
-          ) : (
-            <Link to="/" onClick={this.logout} >Log Out</Link>
           )}
         </Header>
         <div className="episode-main">
@@ -162,8 +167,8 @@ class EpisodePage extends Component {
             podcast_title={this.state.podcast_title}
             episode_title={this.state.episode.title}
             episode_description={this.state.episode.description}
-            // episode_release_date={this.convertTimestamp(toString(this.state.episode.created))}
-            // url={this.state.episode.url}
+            episode_release_date={this.state.episode.created}
+            convertTimestamp={this.convertTimestamp}
             handleStripHTML={this.handleStripHTML}
             url={this.state.mp3}
           />
@@ -181,7 +186,7 @@ class EpisodePage extends Component {
                       comment_timestamp={comment.createdAt}
                       message={comment.comment}
                       username={comment.username}
-                      convertTimestamp={this.convertTimestamp}
+                      convertCommentTimestamp={this.convertCommentTimestamp}
                     />
                   );
                 })}

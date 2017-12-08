@@ -8,7 +8,7 @@ const CommentCard = (props) =>
 			<h2>{props.podcast_title} - "{props.episode_title}"</h2>
     }
 
-  	<h3>{props.username} - {props.convertTimestamp(props.comment_timestamp)}</h3>
+  	<h3>{props.username} - {props.convertCommentTimestamp(props.comment_timestamp)}</h3>
   	<p>{props.message}</p>
   </div>;
 

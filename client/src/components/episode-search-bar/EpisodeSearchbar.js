@@ -13,7 +13,8 @@ const EpisodeSearchbar = props =>
 			id="title"
 			required=""
 		/>
-		<button type="submit" ><i class="fa fa-search fa-2x" aria-hidden="true"></i></button>
+		<button type="submit" ><i className="fa fa-search fa-2x" aria-hidden="true"></i></button>
+		<button type="reset" onClick={props.reset}>Reset</button>
 	</form>;
 
 export default EpisodeSearchbar;

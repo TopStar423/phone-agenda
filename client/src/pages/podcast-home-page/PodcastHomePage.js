@@ -28,10 +28,12 @@ class PodcastHomePage extends Component {
     API.getUserData().then(res =>
       this.setState({
         user_data: res.data.data
-      })
+      }, () => {this.loadEpisodes()})
     )
-      .catch(err => console.log(err));
+     .catch(err => console.log(err));
+  }
 
+  loadEpisodes = () => {
     const that = this;
     let replaced = this.props.match.params.id.split(' ').join('+');
 
@@ -159,19 +161,28 @@ class PodcastHomePage extends Component {
     );
   }
 
+  convertTimestamp = (string) => {
+    var date = new Date(Number(string));
+    return String(date);
+  }
+
+  reset = () => {
+    this.loadEpisodes();
+  }
+
   render() {
     console.log("episodes", this.state.episodes)
     return (
       <div className="podcast-homepage-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {this.state.user_data.length === 0 ? (
+          {this.state.user_data ? (
+            <Link to="/" onClick={this.logout}>Log Out</Link>
+          ) : (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
-          ) : (
-            <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <div className="podcast-homepage">
@@ -193,8 +204,36 @@ class PodcastHomePage extends Component {
               podcast_title={this.state.podcast_title}
               handleFormSubmit={this.handleFormSubmit}
               query={this.state.episode_title}
+              reset={this.reset}
             />
           </div>
+
+          {this.state.episodes.length === 0 ? (
+            <h3><em>No episodes found.</em></h3>
+          ) : (
+            <div className="results-box">
+              <div className="title-search">
+                <h1><strong>{this.state.episodes.length} Episodes</strong></h1>
+              </div>
+              <List>
+                {this.state.episodes.map((episode, index) => {
+                  return (
+                    <EpisodeCard
+                      key={index}
+                      podcast_title={this.state.podcast_title}
+                      episode_title={episode.title}
+                      episode_description={episode.description}
+                      episode_release_date={episode.created}
+                      episode_url={episode.url}
+                      url={episode.mp3}
+                      handleStripHTML={this.handleStripHTML}
+                      convertTimestamp={this.convertTimestamp}
+                    />
+                  );
+                })}
+              </List>
+            </div>
+          )}
         </div>
         {this.state.episodes.length === 0 ? (
           <h3><em>No episodes found.</em></h3>

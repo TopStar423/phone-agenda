@@ -13,7 +13,7 @@ class PodcastSearchResults extends Component {
     podcast_title: "",
     podcast_feed_url: "",
     podcasts: [],
-    userId: ""
+    user_data: {}
   };
 
 
@@ -28,7 +28,7 @@ class PodcastSearchResults extends Component {
       .catch(err => console.log(err));
     API.getUserData().then(res => {
       this.setState({
-        userId: res.data.data.id
+        user_data: res.data.data
       })
     })
   }
@@ -58,7 +58,7 @@ class PodcastSearchResults extends Component {
   logout(){
     API.logout().then(
       this.setState({
-        userId: ""
+        user_data: {}
       })
     );
   }
@@ -67,13 +67,13 @@ class PodcastSearchResults extends Component {
     return (
       <div className="search-results-wrapper">
         <Header>
-          {!this.state.userId ? (
+          {this.state.user_data ? (
+            <Link to="/" onClick={this.logout}>Log Out</Link>
+          ) : (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>
             </div>
-          ) : (
-            <Link to="/" onClick={this.logout}>Log Out</Link>
           )}
         </Header>
         <ResultsPageSearchbar
