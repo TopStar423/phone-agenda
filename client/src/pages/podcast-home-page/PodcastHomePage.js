@@ -18,6 +18,7 @@ class PodcastHomePage extends Component {
     podcast_url: "",
     image: "",
     episodes: [],
+    backup: [],
     episode_title: "",
     user_data: {}
   }
@@ -58,7 +59,8 @@ class PodcastHomePage extends Component {
         podcast_description: res.data.rss.description,
         podcast_url: res.data.rss.url,
         image: res.data.artworkUrl,
-        episodes: episodesArr
+        episodes: episodesArr,
+        backup: episodesArr
       })
     }).catch(err => console.log(err));
   }
@@ -74,6 +76,10 @@ class PodcastHomePage extends Component {
     event.preventDefault();
     if (this.state.episode_title !== "") {
       this.episodeSearch();
+    } else {
+      this.setState({
+        episodes: this.state.backup
+      });
     }
   }
 
@@ -83,29 +89,27 @@ class PodcastHomePage extends Component {
     return decoded;
   }
 
-  episodeSearch = (title) => {
-    if (title !== null) {
-      var countArr = [];
-      var resultsArr = [];
+  episodeSearch = () => {
+    var countArr = [];
+    var resultsArr = [];
 
-      var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function (word) {
+    var titleArr = this.state.episode_title.match(/\b\w+?\b/g).map(function (word) {
+      return word.toLowerCase();
+    });
+
+    for (var i = 0; i < this.state.episodes.length; i++) {
+      countArr[i] = 0;
+      resultsArr[i] = 0;
+
+      var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function (word) {
         return word.toLowerCase();
       });
 
-      for (var i = 0; i < this.state.episodes.length; i++) {
-        countArr[i] = 0;
-        resultsArr[i] = 0;
-
-        var epTitleArr = this.state.episodes[i].title.match(/\b\w+?\b/g).map(function (word) {
-          return word.toLowerCase();
-        });
-
-        for (var j = 0; j < titleArr.length; j++) {
-          for (var k = 0; k < epTitleArr.length; k++) {
-            if (titleArr[j] === epTitleArr[k]) {
-              countArr[i]++; // countArr records all the scores in each index
-              resultsArr[i] = this.state.episodes[i]; // resultsArr records all the episodes that match
-            }
+      for (var j = 0; j < titleArr.length; j++) {
+        for (var k = 0; k < epTitleArr.length; k++) {
+          if (titleArr[j] === epTitleArr[k]) {
+            countArr[i]++; // countArr records all the scores in each index
+            resultsArr[i] = this.state.episodes[i]; // resultsArr records all the episodes that match
           }
         }
       }
@@ -151,8 +155,6 @@ class PodcastHomePage extends Component {
       .catch(err => console.log(err));
   }
 
-
-
   convertTimestamp = (number) => {
     var monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -169,10 +171,6 @@ class PodcastHomePage extends Component {
         user_data: {}
       })
     );
-  }
-
-  reset = () => {
-    this.loadEpisodes();
   }
 
   render() {
@@ -193,8 +191,7 @@ class PodcastHomePage extends Component {
           <PodcastCard
             podcast_description={this.state.podcast_description}
             podcast_title={this.props.match.params.id}
-            // podcast_url={this.state.podcast_url}
-            image={this.state.image}
+            podcast_image={this.state.image}
             handleStripHTML={this.handleStripHTML}
             subscribe={this.subscribe}
           />
@@ -208,7 +205,6 @@ class PodcastHomePage extends Component {
               handleInputChange={this.handleInputChange}
               handleFormSubmit={this.handleFormSubmit}
               query={this.state.episode_title}
-              reset={this.reset}
             />
           </div>
         </div>
