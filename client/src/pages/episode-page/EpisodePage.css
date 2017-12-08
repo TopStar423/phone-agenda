@@ -1,3 +1,27 @@
 .episode-wrapper {
   width: 100%;
 }
+
+.episode-wrapper .episode-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.episode-wrapper .episode-main .episode-card-wrapper {
+  width: 80%;
+  margin-top: 60px;
+}
+
+.episode-wrapper .episode-main .episode-card-wrapper h2 {
+  font-size: 2.5em;
+  text-align: center;
+}
+
+.episode-wrapper .episode-main .episode-card-wrapper a {
+  text-decoration: none;
+}
+
+.episode-wrapper .episode-main .episode-card-wrapper button {
+  display: none;
+}

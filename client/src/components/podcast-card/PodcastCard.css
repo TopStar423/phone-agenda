@@ -23,6 +23,7 @@
 .podcast-box .link-subscribe .podcastButton {
 	font-size: 1.4em;
 	width: 110px;
+	padding: 10px;
 }
 
 @media (max-width: 768px) {

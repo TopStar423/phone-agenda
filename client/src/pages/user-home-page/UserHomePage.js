@@ -90,12 +90,12 @@ class UserHomePage extends Component {
     return (
       <div className="home-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
           <Link to="/" onClick={this.logout}>Log Out</Link>
         </Header>
         <div className="home-main">
           <div className="sidebar">
-            <h1>Your Podcasts: </h1>
+            <h1>My Podcasts</h1>
             {this.state.user_podcasts.length == 0 ? (
               <div>
                 <h3><em>No podcasts to display.</em></h3>
@@ -117,7 +117,7 @@ class UserHomePage extends Component {
             )}
           </div>
           <div className="feed">
-            <h1>Latest Comments: </h1>
+            <h1>Latest Comments</h1>
              {this.state.podcast_comments.length == 0 ? (
                 <div>
                   <h3><em>No comments to display.</em></h3>

@@ -165,7 +165,7 @@ class PodcastHomePage extends Component {
       <div className="podcast-homepage-wrapper">
         <Header>
           <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
-          {!this.state.user_data.length ? (
+          {this.state.user_data.length === 0 ? (
             <div className="links">
               <Link to="/signup">Sign Up</Link>
               <Link to="/login">Log In</Link>

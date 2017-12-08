@@ -7,6 +7,7 @@
   padding: 30px;
   justify-content: space-around;
   background: #ebe9e9;
+  margin-top: 40px;
 }
 
 .home-wrapper .home-main .sidebar {
@@ -16,10 +17,22 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: 500px;
+  width: 400px;
 }
 
 .home-wrapper .home-main .sidebar li {
   list-style: none;
+}
+
+.home-wrapper .home-main .sidebar .list-container {
+  padding: 10px;
+}
+
+.home-wrapper .home-main .sidebar .list-group {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .home-wrapper .home-main .sidebar .podcast-thumbnail {
@@ -29,6 +42,7 @@
 .home-wrapper .home-main .sidebar .podcast-thumbnail img {
   height: 80px;
   width: 80px;
+  margin: 5px;
 }
 
 .home-wrapper .home-main .feed {
@@ -43,4 +57,13 @@
 
 .home-wrapper .home-main .feed li {
   list-style: none;
+}
+
+.home-wrapper .home-main .feed .list-group {
+  padding: 0;
+}
+
+.home-wrapper .home-main .feed .comment-box {
+  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+  margin: 20px 0;
 }

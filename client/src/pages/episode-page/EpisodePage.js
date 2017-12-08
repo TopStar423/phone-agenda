@@ -142,6 +142,7 @@ class EpisodePage extends Component {
   }
 
   render() {
+    console.log("episode", this.state.episode)
     return (
       <div className="episode-wrapper">
         <Header>
@@ -155,14 +156,14 @@ class EpisodePage extends Component {
             <Link to="/" onClick={this.logout} >Log Out</Link>
           )}
         </Header>
-        <div>
+        <div className="episode-main">
           <EpisodeCard
             key={this.state.podcast_title}
             podcast_title={this.state.podcast_title}
             episode_title={this.state.episode.title}
             episode_description={this.state.episode.description}
-            episode_release_date={this.state.episode.released}
-            url={this.state.episode.url}
+            // episode_release_date={this.convertTimestamp(toString(this.state.episode.created))}
+            // url={this.state.episode.url}
             handleStripHTML={this.handleStripHTML}
             url={this.state.mp3}
           />

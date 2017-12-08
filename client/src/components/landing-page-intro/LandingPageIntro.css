@@ -9,17 +9,17 @@
   border-radius: 30px;
 }
 
+.landingIntro .logo img {
+  height: 100px;
+  width: 325px;
+}
+
 .landingIntro h3 {
   font-size: 2em;
 }
 
 .landingIntro label {
   font-size: 1.4em;
-}
-
-.landingIntro input {
-  font-size: 1.8em;
-  padding: 8px;
 }
 
 .landingIntro button {
@@ -30,14 +30,22 @@
 
 .landingIntro form {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
 .landingIntro form button {
-  border: none;
-  height: 30px;
+  font-size: 1.8em;
+  width: 318px;
+  padding: 10px 0;
+  background-color: #9ACD32;
+  color: #fff;
+  margin-top: 10px;
 }
 
 .landingIntro form .form-control {
-  width: 250px;
+  width: 300px;
+  font-size: 1.8em;
+  padding: 8px;
+  margin-right: 0;
 }
