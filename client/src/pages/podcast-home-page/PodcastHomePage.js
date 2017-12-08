@@ -21,16 +21,21 @@ class PodcastHomePage extends Component {
     image: "",
     episodes: [],
     episode_title: "",
-    user_data: {}
+    user_data: {},
+    user_podcasts: [],
+    subscribed: "Subscribe"
   }
 
   componentDidMount() {
     API.getUserData().then(res =>
       this.setState({
         user_data: res.data.data
-      }, () => {this.loadEpisodes()})
+      }, () => {this.loadEpisodes()
+                this.getUserPodcasts()
+                })
     )
      .catch(err => console.log(err));
+     
   }
 
   loadEpisodes = () => {
@@ -145,12 +150,20 @@ class PodcastHomePage extends Component {
   }
 
   subscribe = () => {
-    API.savePodcast({
+    if (this.state.user_data){
+      API.savePodcast({
       imageUrl: this.state.image,
       podcastName: this.state.podcast_title,
       userId: this.state.user_data.id
-    })
+    }).then(
+        this.setState({
+            subscribed: "Unsubscribe"
+          })
+      )
      .catch(err => console.log(err));
+   } else {
+      this.props.history.push('/login');
+   }
   }
 
   logout(){
@@ -168,6 +181,25 @@ class PodcastHomePage extends Component {
 
   reset = () => {
     this.loadEpisodes();
+  }
+
+  getUserPodcasts = () => {
+    if (this.state.user_data){
+      API.getUserPodcasts(this.state.user_data.id).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+            this.setState({
+              user_podcasts: this.state.user_podcasts.concat(res.data[i].podcastName)
+            })
+        }
+        console.log(this.state.user_podcasts, this.props.match.params.id)
+        if (this.state.user_podcasts.indexOf(this.props.match.params.id) > -1){            
+          this.setState({
+              subscribed: "Unsubscribe"
+            })
+        }
+      })
+      .catch(err => console.log(err));
+    } 
   }
 
   render() {
@@ -193,6 +225,7 @@ class PodcastHomePage extends Component {
               image={this.state.image}
               handleStripHTML={this.handleStripHTML}
               subscribe={this.subscribe}
+              buttonText={this.state.subscribed}
             />
           </div>
           <div className="episode-searchbar">

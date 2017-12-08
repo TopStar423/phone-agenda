@@ -12,7 +12,7 @@ const PodcastCard = (props) =>
     </div>
     <div className="link-subscribe">
       <h2><a href={props.podcast_url}>{props.podcast_url}</a></h2>
-      <button type="submit" className="podcastButton" onClick={props.subscribe}>Subscribe</button>
+      <button type="submit" className="podcastButton" onClick={props.subscribe}>{props.buttonText}</button>
     </div>
   </div>;
 
