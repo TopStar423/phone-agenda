@@ -87,16 +87,19 @@ class EpisodePage extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     var temp = decodeURIComponent(this.props.match.params.ep_id);
+    if (this.state.user_data){
+      API.saveComment({
+        comment: this.state.comment,
+        podcastName: this.props.match.params.pod_id,
+        podcastEpisodeName: temp,
+        userId: this.state.user_data.id,
+        username: this.state.user_data.username
+      });
 
-    API.saveComment({
-      comment: this.state.comment,
-      podcastName: this.props.match.params.pod_id,
-      podcastEpisodeName: temp,
-      userId: this.state.user_data.id,
-      username: this.state.user_data.username
-    });
-
-    this.getEpisodeComments();
+      this.getEpisodeComments();
+    } else {
+    this.props.history.push('/login');
+    }
   }
 
   handleInputChange = event =>{
