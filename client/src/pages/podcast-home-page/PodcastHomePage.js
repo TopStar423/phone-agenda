@@ -16,7 +16,7 @@ class PodcastHomePage extends Component {
     podcast_title: "",
     podcast_description: "",
     podcast_url: "",
-    image: "",
+    podcast_image: "",
     episodes: [],
     backup: [],
     episode_title: "",
@@ -228,8 +228,7 @@ class PodcastHomePage extends Component {
             <PodcastCard
               podcast_description={this.state.podcast_description}
               podcast_title={this.props.match.params.id}
-              // podcast_url={this.state.podcast_url}
-              image={this.state.image}
+              podcast_image={this.state.image}
               handleStripHTML={this.handleStripHTML}
               subscribe={this.subscribe}
               buttonText={this.state.subscribed}
