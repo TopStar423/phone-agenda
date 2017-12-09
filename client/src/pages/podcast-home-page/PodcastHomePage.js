@@ -166,7 +166,7 @@ class PodcastHomePage extends Component {
    } else {
       this.props.history.push('/login');
    }
-    })
+    });
       .catch(err => console.log(err));
   }
 
