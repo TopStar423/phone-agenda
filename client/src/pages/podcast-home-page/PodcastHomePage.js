@@ -245,7 +245,7 @@ class PodcastHomePage extends Component {
             </div>
           )}
         </Header>
-        <div>
+        <div className="podcast-page-div">
           <div className="podcast-homepage">
             <PodcastCard
               podcast_description={this.state.podcast_description}

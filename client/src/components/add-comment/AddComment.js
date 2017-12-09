@@ -13,7 +13,7 @@ const AddComment = props =>
       id="comment"
       required="true"
     />
-    <button type="submit" style={{cursor: "pointer"}}>Add Comment</button>
+    <button type="submit">Submit</button>
   </form>;
 
 export default AddComment;

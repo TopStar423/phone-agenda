@@ -157,6 +157,7 @@ class EpisodePage extends Component {
   }
 
   render() {
+    console.log("episode", this.state.episode);
     return (
       <div className="episode-wrapper">
         <Header>
@@ -180,25 +181,31 @@ class EpisodePage extends Component {
             handleStripHTML={this.handleStripHTML}
             convertTimestamp={this.convertTimestamp}
           />
-            <div>
+            <div className="comments-wrapper">
               <AddComment
                 handleFormSubmit = {this.handleFormSubmit}
                 handleInputChange = {this.handleInputChange}
                 comment = {this.state.comment}
               />
-              <List>
-                {this.state.episode_comments.map(comment => {
-                  return (
-                    <CommentCard
-                      key={comment.id}
-                      comment_timestamp={comment.createdAt}
-                      message={comment.comment}
-                      username={comment.username}
-                      convertCommentTimestamp={this.convertCommentTimestamp}
-                    />
-                  );
-                })}
-              </List>
+              {this.state.episode_comments.length === 0 ? (
+                <div>
+                  <h3><em>No Comments for this Episode Yet!</em></h3>
+                </div>
+              ) : (
+                <List>
+                  {this.state.episode_comments.map(comment => {
+                    return (
+                      <CommentCard
+                        key={comment.id}
+                        comment_timestamp={comment.createdAt}
+                        message={comment.comment}
+                        username={comment.username}
+                        convertCommentTimestamp={this.convertCommentTimestamp}
+                      />
+                    );
+                  })}
+                </List>
+              )}
             </div>
         </div>
       </div>

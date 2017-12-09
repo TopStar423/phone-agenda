@@ -9,8 +9,11 @@
 }
 
 .episode-wrapper .episode-main .episode-card-wrapper {
-  width: 80%;
+  width: 70%;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .episode-wrapper .episode-main .episode-card-wrapper h2 {
@@ -20,8 +23,56 @@
 
 .episode-wrapper .episode-main .episode-card-wrapper a {
   text-decoration: none;
+  color: #000;
 }
 
 .episode-wrapper .episode-main .episode-card-wrapper button {
   display: none;
+}
+
+.episode-wrapper .add-comment {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.episode-wrapper .add-comment textarea {
+  height: 75px;
+  width: 400px;
+  font-size: 2em;
+  padding: 8px;
+}
+
+.episode-wrapper .add-comment button {
+  font-size: 1.5em;
+  background-color: #9ACD32;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.episode-wrapper .comments-wrapper, .episode-wrapper .list-container {
+  width: 100%;
+}
+
+.episode-wrapper .comments-wrapper {
+  text-align: center;
+}
+
+.episode-wrapper .comments-wrapper h3 {
+  font-size: 1.8em;
+}
+
+.episode-wrapper .list-group {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.episode-wrapper .comment-box {
+  background: #fff;
+  border-radius: 10px;
+  margin: 8px 0;
+  width: 50%;
 }
