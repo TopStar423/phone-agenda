@@ -49,7 +49,7 @@ class Login extends Component {
     return (
       <div className="log-in-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
         </Header>
         <div className="log-in">
           <form>

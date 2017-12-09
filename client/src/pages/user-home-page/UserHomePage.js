@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PodcastCard from "../../components/podcast-card/PodcastCard";
 import CommentCard from "../../components/comment-card/CommentCard";
 import List from "../../components/list/List";
 import Header from "../../components/partials/header/Header";
@@ -62,31 +61,43 @@ class UserHomePage extends Component {
     );
   }
 
+  convertTimestamp = (number) => {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    var date = new Date(number);
+    var temp = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+    return temp;
+  }
+
   convertCommentTimestamp = (string) => {
-    var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
-        "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
-        "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
-    var d = string.match(new RegExp(regexp));
+    var now = Date.now();
+    var then = Date.parse(string);
+    var diff = Math.abs(now - then);
+    var seconds = Math.floor(diff / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
 
-    var offset = 0;
-    var date = new Date(d[1], 0, 1);
-
-    if (d[3]) { date.setMonth(d[3] - 1); }
-    if (d[5]) { date.setDate(d[5]); }
-    if (d[7]) { date.setHours(d[7]); }
-    if (d[8]) { date.setMinutes(d[8]); }
-    if (d[10]) { date.setSeconds(d[10]); }
-    if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
-    if (d[14]) {
-        offset = (Number(d[16]) * 60) + Number(d[17]);
-        offset *= ((d[15] == '-') ? 1 : -1);
+    if(hours > 24){
+      return ("posted on " + this.convertTimestamp(then));
     }
 
-    offset -= date.getTimezoneOffset();
-    let time = (Number(date) + (offset * 60 * 1000));
-    date.setTime(Number(time));
-    var res = String(date);
-    return res;
+    else if(hours < 24){
+      if(hours < 1){
+        if(minutes < 1){
+          return ("posted a few seconds ago...");
+        } 
+
+        else {
+          return ("posted " + minutes + " minutes ago...");
+        }
+      }
+
+      else {
+        return ("posted " + hours + " hours ago...");
+      }
+    }
   }
 
   render() {
@@ -105,7 +116,7 @@ class UserHomePage extends Component {
         </Header>        
         <div className="home-main">
           <div className="sidebar">
-            <h1>Your Podcasts: </h1>
+            <h1>My Podcasts</h1>
             {this.state.user_podcasts.length == 0 ? (
               <div>
                 <h3><em>No podcasts to display.</em></h3>
@@ -127,7 +138,7 @@ class UserHomePage extends Component {
             )}
           </div>
           <div className="feed">
-            <h1>Latest Comments: </h1>
+            <h1>Latest Comments</h1>
              {this.state.podcast_comments.length == 0 ? (
                 <div>
                   <h3><em>No comments to display.</em></h3>

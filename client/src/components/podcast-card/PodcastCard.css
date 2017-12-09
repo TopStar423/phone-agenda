@@ -10,6 +10,10 @@
 	align-items: center;
 }
 
+.podcast-box .title h2 {
+	font-size: 1.7em;
+}
+
 .podcast-box .link-subscribe {
 	width: 100%;
 	display: flex;
@@ -19,6 +23,7 @@
 .podcast-box .link-subscribe .podcastButton {
 	font-size: 1.4em;
 	width: 110px;
+	padding: 10px;
 }
 
 @media (max-width: 768px) {

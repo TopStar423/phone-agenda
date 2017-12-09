@@ -114,43 +114,50 @@ class EpisodePage extends Component {
     );
   }
 
-  convertTimestamp = (string) => {
-    var date = new Date(Number(string));
-    return String(date);
+  convertTimestamp = (number) => {
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    var date = new Date(number);
+    var temp = monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+    return temp;
   }
 
   convertCommentTimestamp = (string) => {
-    var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
-        "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
-        "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
-    var d = string.match(new RegExp(regexp));
+    var now = Date.now();
+    var then = Date.parse(string);
+    var diff = Math.abs(now - then);
+    var seconds = Math.floor(diff / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
 
-    var offset = 0;
-    var date = new Date(d[1], 0, 1);
-
-    if (d[3]) { date.setMonth(d[3] - 1); }
-    if (d[5]) { date.setDate(d[5]); }
-    if (d[7]) { date.setHours(d[7]); }
-    if (d[8]) { date.setMinutes(d[8]); }
-    if (d[10]) { date.setSeconds(d[10]); }
-    if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
-    if (d[14]) {
-        offset = (Number(d[16]) * 60) + Number(d[17]);
-        offset *= ((d[15] == '-') ? 1 : -1);
+    if(hours > 24){
+      return ("posted on " + this.convertTimestamp(then));
     }
 
-    offset -= date.getTimezoneOffset();
-    let time = (Number(date) + (offset * 60 * 1000));
-    date.setTime(Number(time));
-    var res = String(date);
-    return res;
+    else if(hours < 24){
+      if(hours < 1){
+        if(minutes < 1){
+          return ("posted a few seconds ago...");
+        } 
+
+        else {
+          return ("posted " + minutes + " minutes ago...");
+        }
+      }
+
+      else {
+        return ("posted " + hours + " hours ago...");
+      }
+    }
   }
 
   render() {
     return (
       <div className="episode-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
           {this.state.user_data ? (
             <Link to="/" onClick={this.logout} >Log Out</Link>
           ) : (
@@ -160,23 +167,21 @@ class EpisodePage extends Component {
             </div>
           )}
         </Header>
-        <div>
+        <div className="episode-main">
           <EpisodeCard
-            key={this.state.podcast_title}
             podcast_title={this.state.podcast_title}
             episode_title={this.state.episode.title}
             episode_description={this.state.episode.description}
-
-            episode_release_date={this.state.episode.created}
-            convertTimestamp={this.convertTimestamp}
+            episode_created={this.state.episode.created}
+            episode_url={this.state.mp3}
             handleStripHTML={this.handleStripHTML}
-            url={this.state.mp3}
+            convertTimestamp={this.convertTimestamp}
           />
             <div>
               <AddComment
-              handleFormSubmit = {this.handleFormSubmit}
-              handleInputChange = {this.handleInputChange}
-              comment = {this.state.comment}
+                handleFormSubmit = {this.handleFormSubmit}
+                handleInputChange = {this.handleInputChange}
+                comment = {this.state.comment}
               />
               <List>
                 {this.state.episode_comments.map(comment => {

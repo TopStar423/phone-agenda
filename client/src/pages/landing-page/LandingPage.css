@@ -1,7 +1,13 @@
 .landing-page-wrapper {
   width: 100%;
-
+	background-image: url("./../../assets/images/podcastbackground.png");
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.landing-intro-wrapper {
+  height: calc(100vh - 120px);
+  display: flex;
   align-items: center;
 }

@@ -6,9 +6,10 @@ import './Header.css';
 const Header = (props) => (
   <div className="header">
     <div className="left">
-      <Logo src="http://placebear.com/200/60"/>
+      <Link to="/"><Logo /></Link>
     </div>
     <div className="right">
+      <Link to="/home"><i className="fa fa-home fa-3x" aria-hidden="true"></i></Link>
       {props.children}
     </div>
   </div>

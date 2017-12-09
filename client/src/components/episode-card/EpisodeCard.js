@@ -6,20 +6,20 @@ import ReactAudioPlayer from 'react-audio-player';
 
 
 const EpisodeCard = (props) => (
-	<div className="episode-card-box"> 
+	<div className="episode-card-wrapper">
 	  <Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_title)}`}>
 	  	<h2>{props.episode_title}</h2>
 	  </Link>
-  	
-  	<h2>{props.handleStripHTML(props.episode_description)}</h2>
-  	<h2><i>Released: {props.convertTimestamp(props.episode_release_date)}</i></h2>
-
-		<ReactAudioPlayer
-			src={props.url}
-			controls
-		/>
-    <a href={props.url}><Button label="Play Episode" /></a>
-  	<Button className="episodeButton" label="Comments" />
+ 
+  	<p>{props.handleStripHTML(props.episode_description)}</p>
+  	<h3><i>Released: {props.convertTimestamp(props.episode_created)}</i></h3>
+		<div className="audio-comments">
+			<ReactAudioPlayer
+				src={props.episode_url}
+				controls
+			/>
+			<Button className="episode-button" label="Comments" />
+		</div>
   </div>
 );
 
