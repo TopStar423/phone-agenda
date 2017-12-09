@@ -8,7 +8,6 @@ import './App.css';
 const App = () => (
 	<Router>
 		<div className="app">
-			<DevLinks />
 			<Routes />
 			<Footer />
 		</div>

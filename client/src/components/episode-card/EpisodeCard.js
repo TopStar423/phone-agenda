@@ -18,7 +18,9 @@ const EpisodeCard = (props) => (
 				src={props.episode_url}
 				controls
 			/>
-			<Button className="episode-button" label="Comments" />
+			<Link to={`/episode/${props.podcast_title}/${encodeURIComponent(props.episode_title)}`}>
+				<Button className="episode-button" label="View Comments" />
+			</Link>
 		</div>
   </div>
 );

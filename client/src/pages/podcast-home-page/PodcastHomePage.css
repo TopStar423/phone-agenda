@@ -75,9 +75,6 @@
 
 .results-box .list-container .list-group {
   padding: 0;
-}
-
-.results-box .list-container .list-group {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,4 +83,22 @@
 .results-box .list-container .list-group .episode-card-wrapper {
   margin-bottom: 30px;
   width: 70%;
+}
+
+.podcast-homepage-wrapper .episode-card-wrapper a {
+  text-decoration: none;
+  color: #000;
+}
+
+.podcast-homepage-wrapper .episode-card-wrapper button {
+  background-color: #9ACD32;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1.2em;
+}
+
+.podcast-page-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
