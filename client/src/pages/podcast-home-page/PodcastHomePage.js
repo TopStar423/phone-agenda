@@ -166,8 +166,6 @@ class PodcastHomePage extends Component {
    } else {
       this.props.history.push('/login');
    }
-    });
-      .catch(err => console.log(err));
   }
 
   convertTimestamp = (number) => {
@@ -274,6 +272,7 @@ class PodcastHomePage extends Component {
               })}
             </List>
           </div>
+        </div>
         </div>
       </div>
     );
