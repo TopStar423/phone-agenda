@@ -88,4 +88,21 @@ router.post("/savedPodcast/save/", isAuthenticated, function (req, res) {
     });
 });
 
+// post route to delete podcasts to logged in user's profile
+router.delete("/savedPodcast/remove/:userId/:podcastName", function (req, res) {
+  db.savedPodcasts.destroy({
+    where: {
+      userId: req.params.userId,
+      podcastName: req.params.podcastName
+    }
+  })
+    .then(function(res) {
+        res.json("podcast deleted");
+      }
+    )
+    .catch(function(err){
+     res.json(err);
+    });
+});
+
 module.exports = router;

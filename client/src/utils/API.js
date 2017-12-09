@@ -51,5 +51,9 @@ export default {
 
   getSavedPodcastComments: function(pod_name){
     return axios.get("/api/comments/" + pod_name);
+  },
+
+  deletePodcast: function(userId, pod_name){
+    return axios.delete("/api/savedPodcast/remove/" + userId + "/" + pod_name);
   }
 };

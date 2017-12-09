@@ -168,6 +168,28 @@ class PodcastHomePage extends Component {
    }
   }
 
+  unsubscibe = () => {
+    if (this.state.user_data){
+      API.deletePodcast(this.state.user_data.id, this.state.podcast_title)
+      .then(
+        this.setState({
+            subscribed: "Subscribe"
+          })
+      )
+     .catch(err => console.log(err));
+   } else {
+      this.props.history.push('/login');
+   }
+  }
+
+  subOrUnsub = () => {
+    if (this.state.subscribed === "Subscribe"){
+      this.subscribe();
+    } else {
+      this.unsubscibe();
+    }
+  }
+
   convertTimestamp = (number) => {
     var monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -230,7 +252,7 @@ class PodcastHomePage extends Component {
               podcast_title={this.props.match.params.id}
               podcast_image={this.state.image}
               handleStripHTML={this.handleStripHTML}
-              subscribe={this.subscribe}
+              subscribe={this.subOrUnsub}
               buttonText={this.state.subscribed}
             />
           </div>
