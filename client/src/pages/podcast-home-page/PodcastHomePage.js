@@ -186,11 +186,6 @@ class PodcastHomePage extends Component {
     );
   }
 
-  convertTimestamp = (string) => {
-    var date = new Date(Number(string));
-    return String(date);
-  }
-
   reset = () => {
     this.loadEpisodes();
   }
