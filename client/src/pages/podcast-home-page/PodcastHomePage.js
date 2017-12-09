@@ -20,16 +20,21 @@ class PodcastHomePage extends Component {
     episodes: [],
     backup: [],
     episode_title: "",
-    user_data: {}
+    user_data: {},
+    user_podcasts: [],
+    subscribed: "Subscribe"
   }
 
   componentDidMount() {
     API.getUserData().then(res =>
       this.setState({
         user_data: res.data.data
-      }, () => {this.loadEpisodes()})
+      }, () => {this.loadEpisodes()
+                this.getUserPodcasts()
+                })
     )
      .catch(err => console.log(err));
+     
   }
 
   loadEpisodes = () => {
@@ -147,10 +152,20 @@ class PodcastHomePage extends Component {
   }
 
   subscribe = () => {
-    API.savePodcast({
+    if (this.state.user_data){
+      API.savePodcast({
       imageUrl: this.state.image,
       podcastName: this.state.podcast_title,
       userId: this.state.user_data.id
+    }).then(
+        this.setState({
+            subscribed: "Unsubscribe"
+          })
+      )
+     .catch(err => console.log(err));
+   } else {
+      this.props.history.push('/login');
+   }
     })
       .catch(err => console.log(err));
   }
@@ -173,6 +188,34 @@ class PodcastHomePage extends Component {
     );
   }
 
+  convertTimestamp = (string) => {
+    var date = new Date(Number(string));
+    return String(date);
+  }
+
+  reset = () => {
+    this.loadEpisodes();
+  }
+
+  getUserPodcasts = () => {
+    if (this.state.user_data){
+      API.getUserPodcasts(this.state.user_data.id).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+            this.setState({
+              user_podcasts: this.state.user_podcasts.concat(res.data[i].podcastName)
+            })
+        }
+        console.log(this.state.user_podcasts, this.props.match.params.id)
+        if (this.state.user_podcasts.indexOf(this.props.match.params.id) > -1){            
+          this.setState({
+              subscribed: "Unsubscribe"
+            })
+        }
+      })
+      .catch(err => console.log(err));
+    } 
+  }
+
   render() {
     return (
       <div className="podcast-homepage-wrapper">
@@ -187,17 +230,21 @@ class PodcastHomePage extends Component {
             </div>
           )}
         </Header>
-        <div className="podcast-homepage">
-          <PodcastCard
-            podcast_description={this.state.podcast_description}
-            podcast_title={this.props.match.params.id}
-            podcast_image={this.state.image}
-            handleStripHTML={this.handleStripHTML}
-            subscribe={this.subscribe}
-          />
-        </div>
+        <div>
+          <div className="podcast-homepage">
+            <PodcastCard
+              podcast_description={this.state.podcast_description}
+              podcast_title={this.props.match.params.id}
+              // podcast_url={this.state.podcast_url}
+              image={this.state.image}
+              handleStripHTML={this.handleStripHTML}
+              subscribe={this.subscribe}
+              buttonText={this.state.subscribed}
+            />
+          </div>
         <div className="title-search">
           <h1><strong>{this.state.episodes.length} Episodes Found</strong></h1>
+
           <div className="episode-searchbar">
             <h2>Find an episode:</h2>
             <EpisodeSearchbar

@@ -104,9 +104,16 @@ class UserHomePage extends Component {
     return (
       <div className="home-wrapper">
         <Header>
-          <FullSearchBar placeholder="Find a podcast" label={<i className="fa fa-search" aria-hidden="true"></i>}/>
-          <Link to="/" onClick={this.logout}>Log Out</Link>
-        </Header>
+          <FullSearchBar placeholder="Find a podcast" label={<i class="fa fa-search" aria-hidden="true"></i>}/>
+            {this.state.user_data ? (
+            <Link to="/" onClick={this.logout}>Log Out</Link>
+          ) : (
+            <div>
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log In</Link>
+            </div>
+          )}
+        </Header>        
         <div className="home-main">
           <div className="sidebar">
             <h1>My Podcasts</h1>
